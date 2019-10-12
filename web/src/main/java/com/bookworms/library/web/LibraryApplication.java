@@ -1,4 +1,4 @@
-package com.bookworms.library;
+package com.bookworms.library.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

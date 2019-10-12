@@ -1,4 +1,4 @@
-package com.bookworms.library;
+package com.bookworms.library.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
