@@ -1,0 +1,48 @@
+{
+	"variables": [],
+	"info": {
+		"name": "BookWorms_Library",
+		"_postman_id": "98e59591-f7a2-bb90-73bb-1a0bffcbd462",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Librarian",
+			"description": "",
+			"item": [
+				{
+					"name": "createCustomer",
+					"request": {
+						"url": "localhost:8080/librarian/createCustomer",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fullName\": \"Janos Pillinger\",\n\t\"email\": \"Janos_Pillinger@epam.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shutdown",
+			"request": {
+				"url": "http://localhost:8080/actuator/shutdown",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
