@@ -12,6 +12,22 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency><!-- change reason: app did not start from main folder --> <!-- moved here from main pom -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin><!-- change reason: app did not start from main folder -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
