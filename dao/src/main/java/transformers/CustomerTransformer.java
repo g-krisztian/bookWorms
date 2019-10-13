@@ -21,4 +21,9 @@ public class CustomerTransformer {
 				borrowTransformer.transform(customer.getBorrows()),
 				bookTransformer.transform(customer.getSubscriptions()), customer.getActive());
 	}
+
+	public Customer transform(CustomerEntity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
