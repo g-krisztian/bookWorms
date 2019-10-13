@@ -11,6 +11,7 @@
 	<groupId>com.bookworms</groupId>
 	<artifactId>library</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>library</name>
 	<description>L2+ Mentor program</description>
 
@@ -31,10 +32,15 @@
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.4.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<version>1.4.199</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -63,4 +69,9 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>dao</module>
+		<module>service</module>
+		<module>web</module>
+	</modules>
 </project>
