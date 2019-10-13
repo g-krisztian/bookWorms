@@ -84,6 +84,7 @@
     </build>
 
     <modules>
+        <module>domain</module>
         <module>dao</module>
         <module>service</module>
         <module>web</module>

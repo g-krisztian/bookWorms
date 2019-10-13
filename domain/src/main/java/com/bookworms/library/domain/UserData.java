@@ -1,4 +1,4 @@
-package com.bookworms.library.service.domain;
+package com.bookworms.library.domain;
 
 /**
  * User related data which has no strong relation to the process of borrowing or the library.

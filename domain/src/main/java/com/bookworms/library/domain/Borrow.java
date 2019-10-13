@@ -1,4 +1,4 @@
-package com.bookworms.library.service.domain;
+package com.bookworms.library.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
