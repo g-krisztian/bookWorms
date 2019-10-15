@@ -15,18 +15,15 @@ public class Borrow {
     private final LocalDate startDate;
     private LocalDate endDate;
     private final BigDecimal libraryFinePerDay; //aka 'latencyCost' TODO delete this comment
-    private Boolean isActive; // what is this again? TODO delete this comment
-    private Boolean isChecked; // what is this again? TODO delete this comment
-    private int numberOfProlongs; // what will be the prolonging logic..?
+    private Boolean isReturned; //deprecated; // what is this again? TODO delete this comment
 
-    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive, Boolean isChecked) {
+    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isReturned) {
         this.customer = customer;
         this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
         this.libraryFinePerDay = libraryFine;
-        this.isActive = isActive;
-        this.isChecked = isChecked;
+        this.isReturned = isReturned;
     }
 
     public Customer getCustomer() {
@@ -50,7 +47,7 @@ public class Borrow {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return isReturned;
     }
 
     public Boolean getChecked() {
