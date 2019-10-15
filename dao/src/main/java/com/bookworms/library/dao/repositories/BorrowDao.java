@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-@Component
-public interface BorrowDao extends JpaRepository {
-    BorrowEnity save(BorrowEnity borrow);
+public interface BorrowDao extends JpaRepository<BorrowEnity, Long> {
 }

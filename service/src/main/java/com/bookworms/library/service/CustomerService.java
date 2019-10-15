@@ -5,7 +5,6 @@ import com.bookworms.library.dao.repositories.BorrowDao;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.service.domain.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,10 +13,13 @@ import java.time.LocalDate;
 @Service
 public class CustomerService {
 
-    @Autowired
-    private BorrowDao borrowDao;
-    @Autowired
-    private LibraryService libraryService;
+    private final BorrowDao borrowDao;
+    private final LibraryService libraryService;
+
+    public CustomerService(BorrowDao borrowDao, LibraryService libraryService) {
+        this.borrowDao = borrowDao;
+        this.libraryService = libraryService;
+    }
 
     public Borrow createBorrow(Customer customer, Book book, boolean active) {
         BorrowEnity borrowEnity = new BorrowEnity(customer.getUserData().getId(),

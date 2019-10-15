@@ -9,19 +9,21 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
 @Entity
 @Table(name = "borrows")
 @Getter
 @Setter
 public class BorrowEnity {
     @Id
-    private final Long id;
-    private final Long customerId;
-    private final Long bookId;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final BigDecimal libraryFine;
-    private final boolean isActive;
+    private  Long id;
+    private  Long customerId;
+    private  Long bookId;
+    private  LocalDate startDate;
+    private  LocalDate endDate;
+    private  BigDecimal libraryFine;
+    private  boolean isActive;
 
     public BorrowEnity(Long customerId, Long bookId, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive) {
         this(null, customerId, bookId, startDate, endDate, libraryFine, isActive);

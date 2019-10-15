@@ -5,6 +5,7 @@ import com.bookworms.library.service.domain.Borrow;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,10 +13,14 @@ import java.util.List;
 
 @Getter
 @Setter
+@Component
 public class LibraryService {
 
-    @Autowired
-    private LibraryDao libraryDao;
+    private final LibraryDao libraryDao;
+
+    public LibraryService(LibraryDao libraryDao) {
+        this.libraryDao = libraryDao;
+    }
 
     private List<Borrow> pendingBorrows = new ArrayList<>();
     private List<Borrow> activeBorrows = new ArrayList<>();
