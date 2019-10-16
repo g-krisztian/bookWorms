@@ -10,14 +10,20 @@ public class Borrow {
 
     public static final int MAXIMUM_DAYS_TO_BORROW = 43; //2 weeks from now(+1) on the same day.. And prolonged max twice (+2*14) TODO delete this comment :D
 
+    private final Long id;
     private final Customer customer;
     private final Book book;
     private final LocalDate startDate;
     private LocalDate endDate;
     private final BigDecimal libraryFinePerDay; //aka 'latencyCost' TODO delete this comment
-    private Boolean isReturned; //deprecated; // what is this again? TODO delete this comment
+    private Boolean isReturned; //deprecated?; // TODO delete this comment
 
-    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isReturned) {
+    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
+        this(null, customer, book, startDate, endDate, libraryFine, isActive);
+    }
+
+    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isReturned) {
+        this.id = id;
         this.customer = customer;
         this.book = book;
         this.startDate = startDate;
@@ -25,6 +31,8 @@ public class Borrow {
         this.libraryFinePerDay = libraryFine;
         this.isReturned = isReturned;
     }
+
+    public Long getId() { return id; }
 
     public Customer getCustomer() {
         return customer;
@@ -46,15 +54,8 @@ public class Borrow {
         return libraryFinePerDay;
     }
 
-    public Boolean getActive() {
+    public Boolean getReturned() {
         return isReturned;
     }
 
-    public Boolean getChecked() {
-        return isChecked;
-    }
-
-    public int getNumberOfProlongs() {
-        return numberOfProlongs;
-    }
 }

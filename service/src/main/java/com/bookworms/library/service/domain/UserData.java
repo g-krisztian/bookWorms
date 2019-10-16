@@ -5,10 +5,12 @@ package com.bookworms.library.service.domain;
  */
 public class UserData {
 
+    private final Long id;
     private final String fullName;
     private final String email;
 
-    public UserData(String fullName, String email) {
+    public UserData(Long id, String fullName, String email) {
+        this.id = id;
         this.fullName = fullName;
         this.email = email;
     }
@@ -20,4 +22,7 @@ public class UserData {
     public String getEmail() {
         return email;
     }
+
+    public Long getId() { return id; }
+
 }
