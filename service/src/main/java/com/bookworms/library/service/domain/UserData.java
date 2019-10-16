@@ -5,16 +5,16 @@ package com.bookworms.library.service.domain;
  */
 public class UserData {
 
-    private final String name;
+    private final String fullName;
     private final String email;
 
-    public UserData(String name, String email) {
-        this.name = name;
+    public UserData(String fullName, String email) {
+        this.fullName = fullName;
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
     public String getEmail() {
