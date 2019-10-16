@@ -9,12 +9,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public interface LibraryDao extends JpaRepository<BorrowEnity, Long> {
 
-    @Modifying @Query(value = "INSERT INTO pending_borrows (borrowId) VALUES (:id)", nativeQuery = true)
-    void addPendingBorrow(@Param("id") Long pendingBorrowId);
+    @Modifying @Query(value = "INSERT INTO pending_borrows (borrow) VALUES (:borrow)", nativeQuery = true)
+    void addPendingBorrow(@Param("borrow") BorrowEnity pendingBorrow);
 
-    @Modifying @Query(value = "INSERT INTO active_borrows (borrowId) VALUES (:id)", nativeQuery = true)
-    void addActiveBorrow(@Param("id") Long id);
+    @Modifying @Query(value = "INSERT INTO active_borrows (borrow) VALUES (:borrow)", nativeQuery = true)
+    void addActiveBorrow(@Param("borrow") BorrowEnity borrow);
 }

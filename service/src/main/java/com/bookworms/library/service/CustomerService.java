@@ -6,6 +6,7 @@ import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.service.domain.Customer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class CustomerService {
         this.libraryService = libraryService;
     }
 
+    @Transactional
     public Borrow createBorrow(Customer customer, Book book, boolean active) {
         BorrowEnity borrowEnity = new BorrowEnity(customer.getUserData().getId(),
                 book.getId(),

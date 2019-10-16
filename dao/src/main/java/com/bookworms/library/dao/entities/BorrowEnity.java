@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Setter
 public class BorrowEnity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private  Long customerId;
     private  Long bookId;
