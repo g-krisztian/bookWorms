@@ -16,20 +16,20 @@ public class Borrow {
     private final LocalDate startDate;
     private LocalDate endDate;
     private final BigDecimal libraryFinePerDay; //aka 'latencyCost' TODO delete this comment
-    private Boolean isReturned; //deprecated?; // TODO delete this comment
+    private Boolean isActive;
 
     public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
         this(null, customer, book, startDate, endDate, libraryFine, isActive);
     }
 
-    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isReturned) {
+    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
         this.id = id;
         this.customer = customer;
         this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
         this.libraryFinePerDay = libraryFine;
-        this.isReturned = isReturned;
+        this.isActive = isActive;
     }
 
     public Long getId() { return id; }
@@ -54,8 +54,8 @@ public class Borrow {
         return libraryFinePerDay;
     }
 
-    public Boolean getReturned() {
-        return isReturned;
+    public Boolean isActive() {
+        return isActive;
     }
 
 }

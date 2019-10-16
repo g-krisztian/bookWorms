@@ -3,9 +3,7 @@ package com.bookworms.library.dao.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Setter
 public class BorrowEnity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
     private  Long customerId;
     private  Long bookId;
