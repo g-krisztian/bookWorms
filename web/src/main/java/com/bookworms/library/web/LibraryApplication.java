@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.bookworms.library.dao","com.bookworms.library.service"})
+@ComponentScan(basePackages = "com.bookworms.library")
 @EntityScan(basePackages = {"com.bookworms.library.dao"})
 @EnableJpaRepositories("com.bookworms.library.dao")
 public class LibraryApplication {
