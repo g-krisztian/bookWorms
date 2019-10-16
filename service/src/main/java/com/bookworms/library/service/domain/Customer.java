@@ -22,28 +22,24 @@ public class Customer {
         return userData;
     }
 
-    public List<Borrow> addBorrow(Borrow borrow){
+    public void addBorrow(Borrow borrow){
         borrows.add(borrow);
-        return getBorrows();
     }
 
-    public List<Borrow> removeBorrow(Borrow borrow){
+    public void removeBorrow(Borrow borrow){
         borrows.remove(borrow);
-        return getBorrows();
     }
 
     public List<Borrow> getBorrows() {
         return Collections.unmodifiableList(borrows);
     }
 
-    public List<Book> addSubscription(Book book){
+    public void addSubscription(Book book){
        subscriptions.add(book);
-       return getSubscriptions();
     }
 
-    public List<Book> removeSubscription(Book book){
+    public void removeSubscription(Book book){
         subscriptions.remove(book); // TODO Maybe these methods should work with id in the future? // TODO remove comment
-        return getSubscriptions();
     }
 
     public List<Book> getSubscriptions() {

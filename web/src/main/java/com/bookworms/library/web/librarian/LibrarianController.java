@@ -1,9 +1,8 @@
 package com.bookworms.library.web.librarian;
 
-import com.bookworms.library.service.CustomerService;
-import com.bookworms.library.service.domain.Borrow;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowResponse;
+import com.bookworms.library.service.domain.Customer;
+import com.bookworms.library.service.librarian.LibrarianService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,18 +15,12 @@ import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
 public class LibrarianController {
 
     @Autowired
-    private CustomerService customerService;
+    private LibrarianService librarianService;
 
     @PostMapping(value = "/librarian/createCustomer")
-    public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody){
-        return new CreateCustomerResponse();
-    }
-
-
-    @PostMapping(value = "/librarian/createBorrow")
-    public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest){
-        Borrow borrow = customerService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(),true);
-        return new CreateBorrowResponse(borrow);
+    public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody) {
+        Customer customer = librarianService.createCustomer(createCustomerRequestBody.getFullName(), createCustomerRequestBody.getEmail());
+        return new CreateCustomerResponse(customer.getUserData(), customer.getBorrows(), customer.getSubscriptions(), customer.getActive());
     }
 
 }

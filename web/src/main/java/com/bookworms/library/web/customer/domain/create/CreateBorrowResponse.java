@@ -15,7 +15,7 @@ public class CreateBorrowResponse {
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final BigDecimal libraryFinePerDay;
-    private final Boolean isActive;
+    private final Boolean isReturned;
     private final Long id;
 
     private final Customer customer;
@@ -28,6 +28,6 @@ public class CreateBorrowResponse {
         this.startDate = borrow.getStartDate();
         this.endDate = borrow.getEndDate();
         this.libraryFinePerDay = borrow.getLibraryFinePerDay();
-        this.isActive = borrow.getActive();
+        this.isReturned = borrow.getReturned();
     }
 }
