@@ -17,12 +17,13 @@ public class Borrow {
     private LocalDate endDate;
     private final BigDecimal libraryFinePerDay; //aka 'latencyCost' TODO delete this comment
     private Boolean isActive;
+    private String status;
 
     public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
-        this(null, customer, book, startDate, endDate, libraryFine, isActive);
+        this(null, customer, book, startDate, endDate, libraryFine, isActive, isActive? "active" : "pending");
     }
 
-    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
+    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive, String status) {
         this.id = id;
         this.customer = customer;
         this.book = book;
@@ -30,6 +31,7 @@ public class Borrow {
         this.endDate = endDate;
         this.libraryFinePerDay = libraryFine;
         this.isActive = isActive;
+        this.status = status;
     }
 
     public Long getId() { return id; }
@@ -56,6 +58,10 @@ public class Borrow {
 
     public Boolean isActive() {
         return isActive;
+    }
+
+    public String getStatus(){
+        return status;
     }
 
 }

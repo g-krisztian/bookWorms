@@ -31,11 +31,11 @@ public class LibraryService {
 
     public void addPendingBorrow(Borrow borrow) {
         pendingBorrows.add(borrow);
-        libraryDao.addPendingBorrow(borrowDao.getOne(borrow.getId()));
+//        libraryDao.addPendingBorrow(borrowDao.getOne(borrow.getId()));
     }
 
     public void addActiveBorrow(Borrow borrow) {
         activeBorrows.add(borrow);
-        libraryDao.addActiveBorrow(borrowDao.getOne(borrow.getId()));
+//        libraryDao.addActiveBorrow(borrowDao.getOne(borrow.getId()));
     }
 }

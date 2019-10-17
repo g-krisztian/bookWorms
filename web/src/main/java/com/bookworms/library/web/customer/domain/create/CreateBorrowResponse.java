@@ -20,6 +20,7 @@ public class CreateBorrowResponse {
 
     private final Customer customer;
     private final Book book;
+    private final String status;
 
     public CreateBorrowResponse(Borrow borrow) {
         this.id = borrow.getId();
@@ -29,5 +30,6 @@ public class CreateBorrowResponse {
         this.endDate = borrow.getEndDate();
         this.libraryFinePerDay = borrow.getLibraryFinePerDay();
         this.isActive = borrow.isActive();
+        this.status = borrow.getStatus();
     }
 }

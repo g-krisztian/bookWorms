@@ -31,7 +31,7 @@ public class CustomerService {
                 BigDecimal.ZERO,
                 active);
         BorrowEnity saved = borrowDao.save(borrowEnity);
-        Borrow borrow = new Borrow(saved.getId(), customer, book, saved.getStartDate(), saved.getEndDate(), saved.getLibraryFine(), saved.isActive());
+        Borrow borrow = new Borrow(saved.getId(), customer, book, saved.getStartDate(), saved.getEndDate(), saved.getLibraryFine(), saved.isActive(), saved.getStatus());
         if (active) {
             libraryService.addActiveBorrow(borrow);
         } else libraryService.addPendingBorrow(borrow);
