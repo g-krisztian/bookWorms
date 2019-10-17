@@ -1,5 +1,8 @@
 package com.bookworms.library.service.domain;
 
+import com.bookworms.library.dao.entities.BorrowEnity;
+import com.bookworms.library.dao.entities.CustomerEntity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +19,12 @@ public class Customer {
         this.borrows = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
         this.isActive = isActive;
+    }
+
+    public Customer(CustomerEntity customerEntity) {
+        this.userData= new UserData(customerEntity.getId(),customerEntity.getFullName(),customerEntity.getEmail());
+        //this.borrows = customerEntity.getBorrows( );
+
     }
 
     public UserData getUserData() {
@@ -50,3 +59,4 @@ public class Customer {
         return isActive;
     }
 }
+

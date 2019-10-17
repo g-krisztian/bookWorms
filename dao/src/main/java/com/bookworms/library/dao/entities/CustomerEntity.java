@@ -1,10 +1,8 @@
 package com.bookworms.library.dao.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -51,6 +49,18 @@ public class CustomerEntity {
     public void setActive(Boolean active) {
         isActive = active;
     }
+
+
+    public List<BorrowEnity> getBorrows() {
+        return borrows;
+    }
+
+    public void setBorrows(List<BorrowEnity> borrows) {
+        this.borrows = borrows;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    private List<BorrowEnity> borrows;
 
     public static final class Builder {
         private String fullName;
