@@ -80,9 +80,23 @@
                     <skip>true</skip><!-- change reason: app did not start from main folder -->
                 </configuration>
             </plugin>
-        </plugins>
+			<plugin>
+			    <artifactId>maven-clean-plugin</artifactId>
+			    <version>3.1.0</version>
+			    <configuration>
+			      <filesets>
+			        <fileset>
+			          <directory>data</directory>
+			          <includes>
+			            <include>**/*.*</include>
+			          </includes>
+			          <followSymlinks>false</followSymlinks>
+			        </fileset>
+			      </filesets>
+			    </configuration>
+			  </plugin>
+	  </plugins>
     </build>
-
     <modules>
         <module>dao</module>
         <module>service</module>
