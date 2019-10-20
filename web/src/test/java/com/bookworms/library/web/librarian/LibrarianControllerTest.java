@@ -6,7 +6,6 @@ import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.librarian.LibrarianService;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
