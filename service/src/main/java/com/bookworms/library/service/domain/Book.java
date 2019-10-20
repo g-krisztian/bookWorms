@@ -2,6 +2,9 @@ package com.bookworms.library.service.domain;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class Book
 {
     private final Long id;
@@ -18,21 +21,4 @@ public class Book
         this.printType = printType;
     }
 
-    public Long getId() { return id; }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public PrintType getPrintType() {
-        return printType;
-    }
 }

@@ -1,5 +1,8 @@
 package com.bookworms.library.service.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum PrintType {
     BOOK("Book"),
     COMIC_BOOK("Comic book"),
@@ -11,7 +14,4 @@ public enum PrintType {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

@@ -1,5 +1,8 @@
 package com.bookworms.library.service.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum Genre {
     ACTION("Action"),
     DOCUMENTARY("Documentary"),
@@ -13,7 +16,4 @@ public enum Genre {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }
