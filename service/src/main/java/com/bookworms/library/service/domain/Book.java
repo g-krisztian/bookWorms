@@ -1,16 +1,18 @@
 package com.bookworms.library.service.domain;
 
-import java.util.List;
+import com.bookworms.library.dao.entities.BookEntity;
 
-public class Book
-{
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Book {
     private final Long id;
     private final String author;
     private final String title;
-    private final List<Genre> genres;
+    private final Genre genres;
     private final PrintType printType;
 
-    public Book(Long id, String author, String title, List<Genre> genres, PrintType printType) {
+    public Book(Long id, String author, String title, Genre genres, PrintType printType) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -18,7 +20,18 @@ public class Book
         this.printType = printType;
     }
 
-    public Long getId() { return id; }
+    public Book(BookEntity book) {
+        this.id = book.getId();
+        this.author = book.getAuthor();
+        this.title = book.getTitle();
+
+        this.genres = Genre.valueOf(book.getGenre());
+        this.printType = PrintType.valueOf(book.getPrintType());
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getAuthor() {
         return author;
@@ -28,7 +41,7 @@ public class Book
         return title;
     }
 
-    public List<Genre> getGenres() {
+    public Genre getGenres() {
         return genres;
     }
 

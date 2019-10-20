@@ -1,6 +1,7 @@
 package com.bookworms.library.dao.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Table(name = "borrows")
 @Getter
 @Setter
+@NoArgsConstructor
 public class BorrowEnity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

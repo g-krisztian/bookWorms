@@ -1,4 +1,4 @@
-package com.bookworms.library.service;
+package com.bookworms.library.service.customer;
 
 import com.bookworms.library.dao.entities.BorrowEnity;
 import com.bookworms.library.dao.repositories.BookRepository;
@@ -7,6 +7,7 @@ import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.service.domain.Customer;
+import com.bookworms.library.service.library.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,7 @@ public class CustomerService {
                 BigDecimal.ZERO,
                 active);
         BorrowEnity saved = borrowDao.save(borrowEnity);
-        Borrow borrow = new Borrow(saved.getId(), new Customer(customerDao.getOne(customer.getUserData().getId())), book, saved.getStartDate(), saved.getEndDate(), saved.getLibraryFine(), saved.isActive(), saved.getStatus());
+        Borrow borrow = new Borrow(saved);
         if (active) {
             libraryService.addActiveBorrow(borrow);
         } else libraryService.addPendingBorrow(borrow);

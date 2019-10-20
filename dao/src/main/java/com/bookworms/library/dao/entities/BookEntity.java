@@ -27,21 +27,22 @@ public class BookEntity {
     private String title;
     private String genre;
     private Long statusId;
-    @OneToMany(mappedBy = "book")
-    private List<BorrowEnity> borrows;
+    private String printType;
 
-    public BookEntity(Long id, String author, String title, String genre, Long statusId, List<BorrowEnity> borrows) {
+
+    public BookEntity(Long id, String author, String title, String genre, Long statusId, String printType) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.genre = genre;
         this.statusId = statusId;
-        this.borrows = borrows;
+        this.printType = printType;
     }
 
     public BookEntity(String author, String title, String genre, Long statusId) {
-        this(null, author,title,genre,statusId, new ArrayList<>());
+        this(null, author,title,genre,statusId, "Book");
     }
+
 }
 
 

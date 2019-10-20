@@ -1,4 +1,4 @@
-package com.bookworms.library.service;
+package com.bookworms.library.service.library;
 
 import com.bookworms.library.dao.repositories.BorrowDao;
 import com.bookworms.library.service.domain.Borrow;

@@ -1,30 +1,27 @@
 package com.bookworms.library.service.domain;
 
-import com.bookworms.library.dao.entities.BorrowEnity;
 import com.bookworms.library.dao.entities.CustomerEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Customer {
 
     private final UserData userData;
-    private final List<Borrow> borrows;
-    private final List<Book> subscriptions;
+    private final List<Borrow> borrows = new ArrayList<>();
+    private final List<Book> subscriptions = new ArrayList<>();
     private final Boolean isActive;
 
     public Customer(UserData userData, Boolean isActive) {
         this.userData = userData;
-        this.borrows = new ArrayList<>();
-        this.subscriptions = new ArrayList<>();
         this.isActive = isActive;
     }
 
     public Customer(CustomerEntity customerEntity) {
         this.userData= new UserData(customerEntity.getId(),customerEntity.getFullName(),customerEntity.getEmail());
-        //this.borrows = customerEntity.getBorrows( );
-
+        this.isActive = customerEntity.getActive();
     }
 
     public UserData getUserData() {

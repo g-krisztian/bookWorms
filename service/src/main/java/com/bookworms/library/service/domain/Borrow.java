@@ -1,5 +1,7 @@
 package com.bookworms.library.service.domain;
 
+import com.bookworms.library.dao.entities.BorrowEnity;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -20,7 +22,7 @@ public class Borrow {
     private String status;
 
     public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
-        this(null, customer, book, startDate, endDate, libraryFine, isActive, isActive? "active" : "pending");
+        this(null, customer, book, startDate, endDate, libraryFine, isActive, isActive ? "active" : "pending");
     }
 
     public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive, String status) {
@@ -34,7 +36,20 @@ public class Borrow {
         this.status = status;
     }
 
-    public Long getId() { return id; }
+    public Borrow(BorrowEnity entity) {
+        this.book = new Book(entity.getBook());
+        this.customer = new Customer(entity.getCustomer());
+        this.id = entity.getId();
+        this.startDate = entity.getStartDate();
+        this.endDate = entity.getStartDate();
+        this.libraryFinePerDay = entity.getLibraryFine();
+        this.isActive = entity.isActive();
+        this.status = entity.getStatus();
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -60,7 +75,7 @@ public class Borrow {
         return isActive;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return status;
     }
 
