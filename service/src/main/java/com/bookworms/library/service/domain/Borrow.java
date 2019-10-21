@@ -3,6 +3,7 @@ package com.bookworms.library.service.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.bookworms.library.dao.entities.BorrowEnity;
 import lombok.Getter;
 
 /**

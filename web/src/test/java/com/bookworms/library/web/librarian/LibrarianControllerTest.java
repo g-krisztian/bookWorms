@@ -1,6 +1,6 @@
 package com.bookworms.library.web.librarian;
 
-import com.bookworms.library.service.CustomerService;
+import com.bookworms.library.service.customer.CustomerService;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.librarian.LibrarianService;
@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class LibrarianControllerTest {

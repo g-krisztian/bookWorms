@@ -1,11 +1,6 @@
 package com.bookworms.library.service.domain;
 
 import com.bookworms.library.dao.entities.BookEntity;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class Book {
 import lombok.Getter;
 
 @Getter

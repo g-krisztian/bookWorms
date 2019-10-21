@@ -4,28 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.bookworms.library.dao.entities.CustomerEntity;
 import lombok.Getter;
 
+@Getter
 public class Customer {
-
-    @Getter
     private final UserData userData;
-    private final List<Borrow> borrows;
-    private final List<Book> subscriptions;
-    @Getter
+
+    private final List<Borrow> borrows = new ArrayList<>();
+    private final List<Book> subscriptions = new ArrayList<>();
     private final Boolean isActive;
 
     public Customer(UserData userData, Boolean isActive) {
         this.userData = userData;
-        this.borrows = new ArrayList<>();
-        this.subscriptions = new ArrayList<>();
         this.isActive = isActive;
     }
 
     public Customer(CustomerEntity customerEntity) {
         this.userData= new UserData(customerEntity.getId(),customerEntity.getFullName(),customerEntity.getEmail());
-        this.isActive = customerEntity.getActive();
+        this.isActive = customerEntity.getIsActive();
     }
+
 
     public void addBorrow(Borrow borrow){
         borrows.add(borrow);

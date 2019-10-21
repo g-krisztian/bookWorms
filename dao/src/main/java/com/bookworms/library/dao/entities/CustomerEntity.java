@@ -1,10 +1,6 @@
 package com.bookworms.library.dao.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -57,7 +53,7 @@ public class CustomerEntity {
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.setFullName(fullName);
             customerEntity.setEmail(email);
-            customerEntity.setActive(isActive);
+            customerEntity.setIsActive(isActive);
             return customerEntity;
         }
     }
