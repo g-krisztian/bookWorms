@@ -3,9 +3,12 @@ package com.bookworms.library.service.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import lombok.Getter;
+
 /**
  * Relationship between customer and borrowed book. Both startDate and endDate is within the borrowing time range.
  */
+@Getter
 public class Borrow {
 
     public static final int MAXIMUM_DAYS_TO_BORROW = 43; //2 weeks from now(+1) on the same day.. And prolonged max twice (+2*14) TODO delete this comment :D
@@ -32,36 +35,6 @@ public class Borrow {
         this.libraryFinePerDay = libraryFine;
         this.isActive = isActive;
         this.status = status;
-    }
-
-    public Long getId() { return id; }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public BigDecimal getLibraryFinePerDay() {
-        return libraryFinePerDay;
-    }
-
-    public Boolean isActive() {
-        return isActive;
-    }
-
-    public String getStatus(){
-        return status;
     }
 
 }

@@ -6,12 +6,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "customers")
+@Getter
+@Setter
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq_gen")
+    @SequenceGenerator(name = "customer_id_seq_gen", sequenceName = "customer_id_seq", allocationSize = 1)
     private Long id;
 
     private String fullName;
@@ -19,38 +25,6 @@ public class CustomerEntity {
     private String email;
 
     private Boolean isActive;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
 
     public static final class Builder {
         private String fullName;
@@ -83,8 +57,10 @@ public class CustomerEntity {
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.setFullName(fullName);
             customerEntity.setEmail(email);
-            customerEntity.setActive(isActive);
+            customerEntity.setIsActive(isActive);
             return customerEntity;
         }
     }
 }
+
+

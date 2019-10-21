@@ -29,7 +29,7 @@ public class CreateBorrowResponse {
         this.startDate = borrow.getStartDate();
         this.endDate = borrow.getEndDate();
         this.libraryFinePerDay = borrow.getLibraryFinePerDay();
-        this.isActive = borrow.isActive();
+        this.isActive = borrow.getIsActive();
         this.status = borrow.getStatus();
     }
 }

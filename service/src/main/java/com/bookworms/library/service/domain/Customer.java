@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.Getter;
+
 public class Customer {
 
+    @Getter
     private final UserData userData;
     private final List<Borrow> borrows;
     private final List<Book> subscriptions;
+    @Getter
     private final Boolean isActive;
 
     public Customer(UserData userData, Boolean isActive) {
@@ -16,10 +20,6 @@ public class Customer {
         this.borrows = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
         this.isActive = isActive;
-    }
-
-    public UserData getUserData() {
-        return userData;
     }
 
     public void addBorrow(Borrow borrow){
@@ -45,8 +45,5 @@ public class Customer {
     public List<Book> getSubscriptions() {
         return Collections.unmodifiableList(subscriptions);
     }
-
-    public Boolean getActive() {
-        return isActive;
-    }
+    
 }
