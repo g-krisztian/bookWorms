@@ -20,8 +20,8 @@ import java.util.Set;
 public class BookEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_seq_gen")
+    @SequenceGenerator(name = "book_id_seq_gen", sequenceName = "book_id_seq", allocationSize = 1)
     private Long id;
     private String author;
     private String title;

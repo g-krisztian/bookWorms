@@ -28,7 +28,7 @@ public class LibrarianController {
     @PostMapping(value = "/librarian/createCustomer")
     public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody) {
         Customer customer = librarianService.createCustomer(createCustomerRequestBody.getFullName(), createCustomerRequestBody.getEmail());
-        return new CreateCustomerResponse(customer.getUserData(), customer.getBorrows(), customer.getSubscriptions(), customer.getActive());
+        return new CreateCustomerResponse(customer.getUserData(), customer.getBorrows(), customer.getSubscriptions(), customer.getIsActive());
     }
 
     @PostMapping(value = "/librarian/createBorrow")

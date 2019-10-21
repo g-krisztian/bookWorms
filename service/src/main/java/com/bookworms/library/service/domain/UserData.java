@@ -1,8 +1,11 @@
 package com.bookworms.library.service.domain;
 
+import lombok.Getter;
+
 /**
  * User related data which has no strong relation to the process of borrowing or the library.
  */
+@Getter
 public class UserData {
 
     private final Long id;
@@ -14,15 +17,5 @@ public class UserData {
         this.fullName = fullName;
         this.email = email;
     }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Long getId() { return id; }
 
 }

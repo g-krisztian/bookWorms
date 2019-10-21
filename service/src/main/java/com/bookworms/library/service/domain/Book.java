@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Book {
+import lombok.Getter;
+
+@Getter
+public class Book
+{
     private final Long id;
     private final String author;
     private final String title;
@@ -29,23 +34,4 @@ public class Book {
         this.printType = PrintType.valueOf(book.getPrintType());
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Genre getGenres() {
-        return genres;
-    }
-
-    public PrintType getPrintType() {
-        return printType;
-    }
 }
