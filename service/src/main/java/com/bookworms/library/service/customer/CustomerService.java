@@ -2,7 +2,7 @@ package com.bookworms.library.service.customer;
 
 import com.bookworms.library.dao.entities.BorrowEnity;
 import com.bookworms.library.dao.repositories.BookRepository;
-import com.bookworms.library.dao.repositories.BorrowDao;
+import com.bookworms.library.dao.repositories.BorrowRepository;
 import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
@@ -14,32 +14,34 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
 
-    private final BorrowDao borrowDao;
-    private final CustomerRepository customerDao;
+    private final BorrowRepository borrowRepository;
+    private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
     private final LibraryService libraryService;
 
     @Autowired
-    public CustomerService(BorrowDao borrowDao, CustomerRepository customerDao, BookRepository bookRepository, LibraryService libraryService) {
-        this.borrowDao = borrowDao;
-        this.customerDao = customerDao;
+    public CustomerService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository, LibraryService libraryService) {
+        this.borrowRepository = borrowRepository;
+        this.customerRepository = customerRepository;
         this.bookRepository = bookRepository;
         this.libraryService = libraryService;
     }
 
     @Transactional
     public Borrow createBorrow(Customer customer, Book book, boolean active) {
-        BorrowEnity borrowEnity = new BorrowEnity(customerDao.getOne(customer.getUserData().getId()),
+        BorrowEnity borrowEnity = new BorrowEnity(customerRepository.getOne(customer.getUserData().getId()),
                 bookRepository.getOne(book.getId()),
                 LocalDate.now(),
                 LocalDate.now().plusWeeks(2),
                 BigDecimal.ZERO,
                 active);
-        BorrowEnity saved = borrowDao.save(borrowEnity);
+        BorrowEnity saved = borrowRepository.save(borrowEnity);
         Borrow borrow = new Borrow(saved);
         if (active) {
             libraryService.addActiveBorrow(borrow);
@@ -47,4 +49,7 @@ public class CustomerService {
         return borrow;
     }
 
+    public List<Book> getBooks() {
+        return bookRepository.findAll().stream().map(Book::new).collect(Collectors.toList());
+    }
 }
