@@ -4,36 +4,35 @@ drop table if exists book;
 
 create TABLE IF NOT EXISTS customers (
     id bigint NOT NULL,
-    fullname text NOT NULL,
+    full_name text NOT NULL,
     email text NOT NULL,
-    isactive boolean
+    is_active boolean
 );
 
 -- Acceptance test failes until id generation bug is not solved, so I am taking this out
 -- Ofcourse AC tests should mock out database later...
--- merge into customers KEY (id) VALUES (1,'Jani', 'Janos_Pillinger@epam.com',true);
+-- merge INTO customers (id,full_name,email,is_active) VALUES (1,'Jani', 'Janos_Pillinger@epam.com',true);
 
 create TABLE IF NOT EXISTS books (
     id bigint NOT NULL,
     author text,
     title text,
     genre text,
+    print_type text,
     status_id bigint
 );
+MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (2,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',1);
 
 create TABLE IF NOT EXISTS borrows(
     id bigint NOT NULL,
     customerid bigint,
     bookid bigint,
-    startdate date,
-    enddate date,
-    libraryfine decimal,
-    isactive boolean,
+    start_date date,
+    end_date date,
+    library_fine decimal,
+    is_active boolean,
     status text,
-    FOREIGN KEY (customerid) REFERENCES library_user(id),
+    FOREIGN KEY (customerid) REFERENCES customers(id),
     FOREIGN KEY (bookid) REFERENCES book(id)
 );
-
-merge into books KEY (id) VALUES (1,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','Sci-fi',1);
-
 
