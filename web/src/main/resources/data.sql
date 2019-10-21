@@ -9,9 +9,7 @@ create TABLE IF NOT EXISTS customers (
     is_active boolean
 );
 
--- Acceptance test failes until id generation bug is not solved, so I am taking this out
--- Ofcourse AC tests should mock out database later...
--- merge INTO customers (id,full_name,email,is_active) VALUES (1,'Jani', 'Janos_Pillinger@epam.com',true);
+merge INTO customers (id,full_name,email,is_active) VALUES (customer_id_seq.nextval,'Jani', 'Janos_Pillinger@epam.com',true);
 
 create TABLE IF NOT EXISTS books (
     id bigint NOT NULL,
@@ -21,7 +19,8 @@ create TABLE IF NOT EXISTS books (
     print_type text,
     status_id bigint
 );
-MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (2,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',1);
+
+MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (book_id_seq.nextval,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',1);
 
 create TABLE IF NOT EXISTS borrows(
     id bigint NOT NULL,
