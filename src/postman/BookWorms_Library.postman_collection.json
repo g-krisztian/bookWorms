@@ -1,44 +1,40 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "44754cf3-b55d-43f2-ac60-2ebb7603c6cc",
 		"name": "BookWorms_Library",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "aedfd41e-c318-c955-aabf-25d2e3040712",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Librarian",
+			"description": "",
 			"item": [
 				{
 					"name": "createCustomer",
 					"request": {
+						"url": "localhost:8080/librarian/createCustomer",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"value": "application/json",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"customer:\"\n\t{\"fullName\": \"Janos Pillinger\",\n\t\"email\": \"Janos_Pillinger@epam.com\"},\n\"book\":{}\n}"
+							"raw": "{\n\t\"customer\": {\n\t\t\"fullName\": \"Janos Pillinger\",\n\t\t\"email\": \"Janos_Pillinger@epam.com\"\n\t},\n\t\"book\":{}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/customer/createBorrow",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"customer",
-								"createBorrow"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Librarian createBorrow",
 					"request": {
+						"url": "localhost:8080/librarian/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -50,29 +46,20 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/librarian/createBorrow",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"librarian",
-								"createBorrow"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Customer",
+			"description": "",
 			"item": [
 				{
 					"name": "Customer createBorrow",
 					"request": {
+						"url": "localhost:8080/customer/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -84,43 +71,25 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/customer/createBorrow",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"customer",
-								"createBorrow"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "shutdown",
 			"request": {
+				"url": "http://localhost:8080/actuator/shutdown",
 				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/actuator/shutdown",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"actuator",
-						"shutdown"
-					]
-				}
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
