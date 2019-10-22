@@ -14,7 +14,6 @@ public class BookService {
 
     private final BookDao bookDao;
 
-    @Autowired
     public BookService(final BookDao bookDao) {
         this.bookDao = bookDao;
     }
