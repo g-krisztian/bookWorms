@@ -1,22 +1,22 @@
+
 package com.bookworms.library.dao.entities;
 
-import lombok.AllArgsConstructor;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
+@Entity
+@Table(name = "books")
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "books")
 public class BookEntity {
 
     @Id
@@ -29,20 +29,10 @@ public class BookEntity {
     private Long statusId;
     private String printType;
 
-
-    public BookEntity(Long id, String author, String title, String genre, Long statusId, String printType) {
-        this.id = id;
+    public BookEntity(final String author, final String title, final String genre, final String printType) {
         this.author = author;
         this.title = title;
         this.genre = genre;
-        this.statusId = statusId;
         this.printType = printType;
     }
-
-    public BookEntity(String author, String title, String genre, Long statusId) {
-        this(null, author,title,genre,statusId, "Book");
-    }
-
 }
-
-

@@ -24,7 +24,7 @@ public class BookResponse {
         this.id = book.getId();
         this.author = book.getAuthor();
         this.title = book.getTitle();
-        this.genres = book.getGenres().getValue();
+        this.genres = book.getGenre().getValue();
         this.printType = book.getPrintType().getValue();
         this.available = true; // TODO some logic behind
     }
