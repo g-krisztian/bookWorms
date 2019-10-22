@@ -1,10 +1,6 @@
 package com.bookworms.library.dao.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +15,8 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq_gen")
     @SequenceGenerator(name = "customer_id_seq_gen", sequenceName = "customer_id_seq", allocationSize = 1)
     private Long id;
-
     private String fullName;
-
     private String email;
-
     private Boolean isActive;
 
     public static final class Builder {
@@ -62,5 +55,3 @@ public class CustomerEntity {
         }
     }
 }
-
-

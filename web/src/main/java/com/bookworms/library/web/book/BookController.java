@@ -24,7 +24,7 @@ public class BookController {
 
     @PostMapping(value = "/book/createBook")
     public CreateBookResponse createBook(@RequestBody CreateBookRequest createBookRequest) {
-        Book book = new Book(createBookRequest.getAuthor(), createBookRequest.getTitle(),
+        Book book = new Book(null, createBookRequest.getAuthor(), createBookRequest.getTitle(),
                 Genre.valueOf(createBookRequest.getGenre()), PrintType.valueOf(createBookRequest.getPrintType()));
         Book savedBook = bookService.createBook(book);
         return new CreateBookResponse(savedBook);

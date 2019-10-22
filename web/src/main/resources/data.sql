@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS customers (
     is_active boolean
 );
 
-MERGE INTO customers (id,full_name,email,is_active) VALUES (1,'Jani', 'Janos_Pillinger@epam.com',true);
+merge INTO customers (id,full_name,email,is_active) VALUES (customer_id_seq.nextval,'Jani', 'Janos_Pillinger@epam.com',true);
 
-CREATE TABLE IF NOT EXISTS books (
+create TABLE IF NOT EXISTS books (
     id bigint NOT NULL,
     author text,
     title text,
@@ -19,9 +19,10 @@ CREATE TABLE IF NOT EXISTS books (
     print_type text,
     status_id bigint
 );
-MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (2,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',1);
 
-CREATE TABLE IF NOT EXISTS borrows(
+MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (book_id_seq.nextval,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',1);
+
+create TABLE IF NOT EXISTS borrows(
     id bigint NOT NULL,
     customerid bigint,
     bookid bigint,
@@ -33,6 +34,4 @@ CREATE TABLE IF NOT EXISTS borrows(
     FOREIGN KEY (customerid) REFERENCES customers(id),
     FOREIGN KEY (bookid) REFERENCES book(id)
 );
-
-
 

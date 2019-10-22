@@ -1,38 +1,42 @@
 package com.bookworms.library.dao.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
-
 @Entity
 @Table(name = "borrows")
 @Getter
 @Setter
+@NoArgsConstructor
 public class BorrowEnity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
-    private  Long customerId;
-    private  Long bookId;
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "customerid")
+    private  CustomerEntity customer;
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "bookid")
+    private  BookEntity book;
     private  LocalDate startDate;
     private  LocalDate endDate;
     private  BigDecimal libraryFine;
     private  boolean isActive;
     private String status;
 
-    public BorrowEnity(Long customerId, Long bookId, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive) {
-        this(null, customerId, bookId, startDate, endDate, libraryFine, isActive , isActive? "active" : "pending");
+    public BorrowEnity(CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive) {
+        this(null, customer, book, startDate, endDate, libraryFine, isActive , isActive? "active" : "pending");
     }
 
-    public BorrowEnity(Long id, Long customerId, Long bookId, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive, String status) {
+    public BorrowEnity(Long id, CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive, String status) {
         this.id = id;
-        this.customerId = customerId;
-        this.bookId = bookId;
+        this.customer = customer;
+        this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
         this.libraryFine = libraryFine;

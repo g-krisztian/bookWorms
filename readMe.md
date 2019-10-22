@@ -8,7 +8,7 @@ TODO Short description of the application.
 
 ##### Running
 * run at least one: mvn clean install
-* run: mvn spring-boot:start
+* run: mvn spring-boot:run
 ##### Using
 * Address: localhost:8080 
 * Postman (Collection V2): src/postman/

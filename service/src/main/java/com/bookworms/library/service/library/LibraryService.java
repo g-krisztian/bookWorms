@@ -1,6 +1,6 @@
-package com.bookworms.library.service;
+package com.bookworms.library.service.library;
 
-import com.bookworms.library.dao.repositories.BorrowDao;
+import com.bookworms.library.dao.repositories.BorrowRepository;
 import com.bookworms.library.service.domain.Borrow;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +15,11 @@ import java.util.List;
 @Component
 public class LibraryService {
 
-    private final BorrowDao borrowDao;
+    private final BorrowRepository borrowRepository;
 
     @Autowired
-    public LibraryService(BorrowDao borrowDao) {
-        this.borrowDao = borrowDao;
+    public LibraryService(BorrowRepository borrowRepository) {
+        this.borrowRepository = borrowRepository;
     }
 
     private List<Borrow> pendingBorrows = new ArrayList<>();

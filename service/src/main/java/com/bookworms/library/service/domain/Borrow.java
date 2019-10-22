@@ -3,6 +3,7 @@ package com.bookworms.library.service.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.bookworms.library.dao.entities.BorrowEnity;
 import lombok.Getter;
 
 /**
@@ -35,6 +36,17 @@ public class Borrow {
         this.libraryFinePerDay = libraryFine;
         this.isActive = isActive;
         this.status = status;
+    }
+
+    public Borrow(BorrowEnity entity) {
+        this.book = new Book(entity.getBook());
+        this.customer = new Customer(entity.getCustomer());
+        this.id = entity.getId();
+        this.startDate = entity.getStartDate();
+        this.endDate = entity.getStartDate();
+        this.libraryFinePerDay = entity.getLibraryFine();
+        this.isActive = entity.isActive();
+        this.status = entity.getStatus();
     }
 
 }

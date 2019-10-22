@@ -9,5 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface BorrowDao extends JpaRepository<BorrowEnity, Long> {
+public interface BorrowRepository extends JpaRepository<BorrowEnity, Long> {
 }
