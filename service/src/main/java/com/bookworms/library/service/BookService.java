@@ -1,10 +1,13 @@
 package com.bookworms.library.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.bookworms.library.dao.entities.BookEntity;
 import com.bookworms.library.dao.repositories.BookDao;
+import com.bookworms.library.dao.repositories.BookRepository;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
@@ -13,9 +16,11 @@ import com.bookworms.library.service.domain.PrintType;
 public class BookService {
 
     private final BookDao bookDao;
+    private final BookRepository bookRepository;
 
-    public BookService(final BookDao bookDao) {
+    public BookService(final BookDao bookDao, BookRepository bookRepository) {
         this.bookDao = bookDao;
+        this.bookRepository = bookRepository;
     }
 
     public Book createBook(final Book book) {
@@ -25,5 +30,9 @@ public class BookService {
         BookEntity savedBook = bookDao.save(bookEntity);
         return new Book(savedBook.getId(), savedBook.getAuthor(), savedBook.getTitle(),
                 Genre.valueOf(savedBook.getGenre()), PrintType.valueOf(savedBook.getPrintType()));
+    }
+
+    public List<Book> getBooks() {
+        return bookRepository.findAll().stream().map(Book::new).collect(Collectors.toList());
     }
 }

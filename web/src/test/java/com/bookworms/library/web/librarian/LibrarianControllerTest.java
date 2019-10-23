@@ -1,6 +1,7 @@
 package com.bookworms.library.web.librarian;
 
-import com.bookworms.library.service.customer.CustomerService;
+import com.bookworms.library.service.BookService;
+import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.librarian.LibrarianService;
@@ -17,15 +18,17 @@ import static org.mockito.Mockito.when;
 public class LibrarianControllerTest {
 
     private LibrarianService librarianService;
-    private CustomerService customerService;
+    private BorrowService borrowService;
+    private BookService bookService;
 
     private LibrarianController underTest;
 
     @Before
     public void setUp() {
         librarianService = Mockito.mock(LibrarianService.class);
-        customerService = Mockito.mock(CustomerService.class);
-        underTest = new LibrarianController(librarianService, customerService);
+        borrowService = Mockito.mock(BorrowService.class);
+        bookService = Mockito.mock(BookService.class);
+        underTest = new LibrarianController(librarianService, borrowService, bookService);
     }
 
     @Test

@@ -1,4 +1,10 @@
-package com.bookworms.library.service.customer;
+package com.bookworms.library.service;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookworms.library.dao.entities.BorrowEnity;
 import com.bookworms.library.dao.repositories.BookRepository;
@@ -8,25 +14,18 @@ import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.library.LibraryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
-@Service
-public class CustomerService {
+@Component
+public class BorrowService {
 
     private final BorrowRepository borrowRepository;
     private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
+
     private final LibraryService libraryService;
 
-    @Autowired
-    public CustomerService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository, LibraryService libraryService) {
+    public BorrowService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository,
+            LibraryService libraryService) {
         this.borrowRepository = borrowRepository;
         this.customerRepository = customerRepository;
         this.bookRepository = bookRepository;
@@ -47,9 +46,5 @@ public class CustomerService {
             libraryService.addActiveBorrow(borrow);
         } else libraryService.addPendingBorrow(borrow);
         return borrow;
-    }
-
-    public List<Book> getBooks() {
-        return bookRepository.findAll().stream().map(Book::new).collect(Collectors.toList());
     }
 }

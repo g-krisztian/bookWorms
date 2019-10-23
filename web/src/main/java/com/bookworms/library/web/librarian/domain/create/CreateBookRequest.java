@@ -1,4 +1,4 @@
-package com.bookworms.library.web.book.domain;
+package com.bookworms.library.web.librarian.domain.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
