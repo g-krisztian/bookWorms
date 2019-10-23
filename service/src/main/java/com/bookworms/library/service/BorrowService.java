@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,27 +52,30 @@ public class BorrowService {
         return borrow;
     }
 
+    @Scheduled(cron = "0 0 12 * * ?")
     public void notifyBorrowers() {
         borrowRepository.findAll()
                 .stream()
                 .map(Borrow::new)
+                .filter(Borrow::getIsActive)
                 .filter(borrow -> borrow.getEndDate().minusDays(4).compareTo(LocalDate.now()) < 0)
-                .forEach(borrow -> sendEmail(borrow));
+                .forEach(this::sendNotifyEmail);
     }
 
-    private void sendEmail(Borrow borrow) {
+    private void sendNotifyEmail(Borrow borrow) {
         String userName = borrow.getCustomer().getUserData().getFullName();
         String email = borrow.getCustomer().getUserData().getEmail();
         String author = borrow.getBook().getAuthor();
         String title = borrow.getBook().getTitle();
         int days = borrow.getEndDate().compareTo(LocalDate.now());
-        System.out.println("sending email: " + email);
+        String message = String.format("Dear %s!\n" +
+                " The book you borrowed (%s: %s) going to exceed in %d day%s. \n" +
+                " Sincerely: Librarian Team", userName, author, title, days, days > 1 ? "s" : "");
+
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
         msg.setSubject("Your borrow near to exceed");
-        String message = String.format("Dear %s!\n The book you borrowed (%s: %s) going to exceed in %d days. \n Sincerely: Librarian Team",userName,author,title,days);
         msg.setText(message);
         javaMailSender.send(msg);
-        System.out.println(msg.toString());
     }
 }
