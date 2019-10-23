@@ -1,12 +1,7 @@
 
 package com.bookworms.library.dao.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,13 +21,16 @@ public class BookEntity {
     private String author;
     private String title;
     private String genre;
-    private Long statusId;
     private String printType;
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "status_id")
+    private BookStatusEntity status;
 
-    public BookEntity(final String author, final String title, final String genre, final String printType) {
+    public BookEntity(final String author, final String title, final String genre, final String printType, final BookStatusEntity status) {
         this.author = author;
         this.title = title;
         this.genre = genre;
         this.printType = printType;
+        this.status = status;
     }
 }

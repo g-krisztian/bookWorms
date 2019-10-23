@@ -1,15 +1,12 @@
 package com.bookworms.library.web.librarian;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
-import com.bookworms.library.service.domain.Book;
-import com.bookworms.library.service.domain.Borrow;
-import com.bookworms.library.service.domain.Customer;
-import com.bookworms.library.service.domain.Genre;
-import com.bookworms.library.service.domain.PrintType;
+import com.bookworms.library.service.domain.*;
 import com.bookworms.library.service.librarian.LibrarianService;
 import com.bookworms.library.web.customer.domain.BookResponse;
 import com.bookworms.library.web.librarian.domain.create.CreateBookRequest;
@@ -51,8 +48,14 @@ public class LibrarianController {
 
     @PostMapping(value = "/librarian/createBook")
     public CreateBookResponse createBook(@RequestBody CreateBookRequest createBookRequest) {
-        Book book = new Book(null, createBookRequest.getAuthor(), createBookRequest.getTitle(),
-                Genre.valueOf(createBookRequest.getGenre()), PrintType.valueOf(createBookRequest.getPrintType()));
+        Long copies = createBookRequest.getCopies().orElse(1L);
+        Book book = new Book(null,
+                createBookRequest.getAuthor(),
+                createBookRequest.getTitle(),
+                Genre.valueOf(createBookRequest.getGenre()),
+                PrintType.valueOf(createBookRequest.getPrintType()),
+                new BookStatus(null, copies, copies, Collections.EMPTY_LIST)
+        );
         Book savedBook = bookService.createBook(book);
         return new CreateBookResponse(savedBook);
     }
@@ -62,11 +65,9 @@ public class LibrarianController {
         return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
     }
 
-    @PostMapping(value="/librarian/notifyBorrowers")
-    public String notifyBorrowers(){
+    @PostMapping(value = "/librarian/notifyBorrowers")
+    public String notifyBorrowers() {
         borrowService.notifyBorrowers();
         return "OK";
     }
-    //librarybookworms21
-    //1!br4ryb00kw0rm8
 }
