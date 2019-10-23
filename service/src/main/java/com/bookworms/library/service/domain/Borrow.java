@@ -20,21 +20,19 @@ public class Borrow {
     private final LocalDate startDate;
     private LocalDate endDate;
     private final BigDecimal libraryFinePerDay; //aka 'latencyCost' TODO delete this comment
-    private Boolean isActive;
     private String status;
 
-    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive) {
-        this(null, customer, book, startDate, endDate, libraryFine, isActive, isActive? "active" : "pending");
+    public Borrow(Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, String status) {
+        this(null, customer, book, startDate, endDate, libraryFine, status);
     }
 
-    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, Boolean isActive, String status) {
+    public Borrow(Long id, Customer customer, Book book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, String status) {
         this.id = id;
         this.customer = customer;
         this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
         this.libraryFinePerDay = libraryFine;
-        this.isActive = isActive;
         this.status = status;
     }
 
@@ -45,7 +43,6 @@ public class Borrow {
         this.startDate = entity.getStartDate();
         this.endDate = entity.getEndDate();
         this.libraryFinePerDay = entity.getLibraryFine();
-        this.isActive = entity.isActive();
         this.status = entity.getStatus();
     }
 

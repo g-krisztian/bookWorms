@@ -30,7 +30,6 @@ create TABLE IF NOT EXISTS borrows(
     start_date date,
     end_date date,
     library_fine decimal,
-    is_active boolean,
     status text,
     FOREIGN KEY (customerid) REFERENCES customers(id),
     FOREIGN KEY (bookid) REFERENCES book(id)

@@ -45,7 +45,7 @@ public class LibrarianController {
 
     @PostMapping(value = "/librarian/createBorrow")
     public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
-        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), true);
+        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "active");
         return new CreateBorrowResponse(borrow);
     }
 

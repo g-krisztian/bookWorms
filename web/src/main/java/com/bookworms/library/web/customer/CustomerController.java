@@ -28,7 +28,7 @@ public class CustomerController {
 
     @PostMapping(value = "/customer/createBorrow")
     public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
-        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), false);
+        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "pending");
         return new CreateBorrowResponse(borrow);
     }
 

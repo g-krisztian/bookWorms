@@ -1,14 +1,5 @@
 package com.bookworms.library.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.bookworms.library.dao.entities.BorrowEnity;
 import com.bookworms.library.dao.repositories.BookRepository;
 import com.bookworms.library.dao.repositories.BorrowRepository;
@@ -17,6 +8,14 @@ import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.library.LibraryService;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
 public class BorrowService {
@@ -24,8 +23,7 @@ public class BorrowService {
     private final BorrowRepository borrowRepository;
     private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
-    private JavaMailSender javaMailSender;
-    private final LibraryService libraryService;
+    private final JavaMailSender javaMailSender;
 
     public BorrowService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository,
                          JavaMailSender javaMailSender, LibraryService libraryService) {
@@ -33,23 +31,18 @@ public class BorrowService {
         this.customerRepository = customerRepository;
         this.bookRepository = bookRepository;
         this.javaMailSender = javaMailSender;
-        this.libraryService = libraryService;
     }
 
     @Transactional
-    public Borrow createBorrow(Customer customer, Book book, boolean active) {
+    public Borrow createBorrow(Customer customer, Book book, String status) {
         BorrowEnity borrowEnity = new BorrowEnity(customerRepository.getOne(customer.getUserData().getId()),
                 bookRepository.getOne(book.getId()),
                 LocalDate.now(),
                 LocalDate.now().plusWeeks(2L),
                 BigDecimal.ZERO,
-                active);
+                status);
         BorrowEnity saved = borrowRepository.save(borrowEnity);
-        Borrow borrow = new Borrow(saved);
-        if (active) {
-            libraryService.addActiveBorrow(borrow);
-        } else libraryService.addPendingBorrow(borrow);
-        return borrow;
+        return new Borrow(saved);
     }
 
     @Scheduled(cron = "0 0 12 * * ?")
@@ -57,7 +50,7 @@ public class BorrowService {
         borrowRepository.findAll()
                 .stream()
                 .map(Borrow::new)
-                .filter(Borrow::getIsActive)
+                .filter(b -> "active".equals(b.getStatus()))
                 .filter(borrow -> borrow.getEndDate().minusDays(4).compareTo(LocalDate.now()) < 0)
                 .forEach(this::sendNotifyEmail);
     }

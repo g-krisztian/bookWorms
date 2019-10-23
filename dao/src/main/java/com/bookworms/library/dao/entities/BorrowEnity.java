@@ -26,21 +26,19 @@ public class BorrowEnity {
     private  LocalDate startDate;
     private  LocalDate endDate;
     private  BigDecimal libraryFine;
-    private  boolean isActive;
     private String status;
 
-    public BorrowEnity(CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive) {
-        this(null, customer, book, startDate, endDate, libraryFine, isActive , isActive? "active" : "pending");
+    public BorrowEnity(CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, String status) {
+        this(null, customer, book, startDate, endDate, libraryFine, status);
     }
 
-    public BorrowEnity(Long id, CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine, boolean isActive, String status) {
+    public BorrowEnity(Long id, CustomerEntity customer, BookEntity book, LocalDate startDate, LocalDate endDate, BigDecimal libraryFine,  String status) {
         this.id = id;
         this.customer = customer;
         this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
         this.libraryFine = libraryFine;
-        this.isActive = isActive;
         this.status = status;
     }
 }
