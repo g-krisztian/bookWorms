@@ -1,16 +1,20 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "dcb0148d-7ec9-4d60-9050-08788f7aed13",
 		"name": "BookWorms_Library",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "57cdcd45-a67f-269a-3818-ed81ae63847d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Librarian",
+			"description": "",
 			"item": [
 				{
 					"name": "createCustomer",
 					"request": {
+						"url": "localhost:8080/librarian/createCustomer",
 						"method": "POST",
 						"header": [
 							{
@@ -22,23 +26,14 @@
 							"mode": "raw",
 							"raw": "{\n\t\"customer\": {\n\t\t\"fullName\": \"Janos Pillinger\",\n\t\t\"email\": \"Janos_Pillinger@epam.com\"\n\t},\n\t\"book\":{}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/librarian/createCustomer",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"librarian",
-								"createCustomer"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				},
 				{
 					"name": "Librarian createBorrow",
 					"request": {
+						"url": "localhost:8080/librarian/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -50,29 +45,31 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/librarian/createBorrow",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"librarian",
-								"createBorrow"
-							]
-						}
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Books",
+					"request": {
+						"url": "localhost:8080/librarian/books",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Customer",
+			"description": "",
 			"item": [
 				{
 					"name": "Customer createBorrow",
 					"request": {
+						"url": "localhost:8080/customer/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -84,29 +81,31 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/customer/createBorrow",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"customer",
-								"createBorrow"
-							]
-						}
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Books",
+					"request": {
+						"url": "localhost:8080/customer/books",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Book",
+			"description": "",
 			"item": [
 				{
 					"name": "createBook",
 					"request": {
+						"url": "localhost:8080/book/createBook",
 						"method": "POST",
 						"header": [
 							{
@@ -118,54 +117,27 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"author\": \"author\",\n\t\"title\": \"title\",\n\t\"genre\": \"ACTION\",\n\t\"printType\": \"BOOK\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n\t\"author\": \"author\",\n\t\"title\": \"title\",\n\t\"genre\": \"ACTION\",\n\t\"printType\": \"BOOK\"\n}"
 						},
-						"url": {
-							"raw": "localhost:8080/book/createBook",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"book",
-								"createBook"
-							]
-						}
+						"description": ""
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "shutdown",
 			"request": {
+				"url": "http://localhost:8080/actuator/shutdown",
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://localhost:8080/actuator/shutdown",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"actuator",
-						"shutdown"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

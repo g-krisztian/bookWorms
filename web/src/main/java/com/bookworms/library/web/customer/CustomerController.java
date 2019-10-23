@@ -35,7 +35,6 @@ public class CustomerController {
     @GetMapping(value = "/customer/books")
     public List<BookResponse> getBooks() {
         return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
-        //  return new ArrayList<>();
     }
 
 }
