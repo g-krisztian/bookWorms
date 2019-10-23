@@ -9,7 +9,6 @@ import com.bookworms.library.dao.repositories.BookStatusRepository;
 import com.bookworms.library.dao.repositories.BorrowRepository;
 import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.*;
-import com.bookworms.library.service.library.LibraryService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +20,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
 public class BorrowService {
 
     private final BorrowRepository borrowRepository;
@@ -91,17 +91,20 @@ public class BorrowService {
         Customer customer = new Customer(customerRepository.getOne(customerId));
         BookStatus status = book.getStatus();
         status.addSubscriber(customer);
+        updateStatus(status);
+        return new Book(bookRepository.getOne(bookId));
+    }
 
+    private void updateStatus(BookStatus status) {
         bookStatusRepository.save(new BookStatusEntity(
                 status.getId(),
                 status.getOverAllCopies(),
                 status.getAvailableCopies(),
-                status.getSubscribers().stream()
+                status.getSubscribers().parallelStream()
                         .map(Customer::getUserData)
                         .map(UserData::getId)
                         .map(customerRepository::getOne)
                 .collect(Collectors.toList())
                 ));
-        return new Book(bookRepository.getOne(bookId));
     }
 }
