@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS customers (
 );
 
 merge INTO customers (id,full_name,email,is_active) VALUES (customer_id_seq.nextval,'Jani', 'Janos_Pillinger@epam.com',true);
+merge INTO customers (id,full_name,email,is_active) VALUES (customer_id_seq.nextval,'G Krisztian', 'gulyas.krisztian1o9@gmail.com',true);
 
 create TABLE IF NOT EXISTS books (
     id bigint NOT NULL,

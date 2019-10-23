@@ -43,7 +43,7 @@ public class Borrow {
         this.customer = new Customer(entity.getCustomer());
         this.id = entity.getId();
         this.startDate = entity.getStartDate();
-        this.endDate = entity.getStartDate();
+        this.endDate = entity.getEndDate();
         this.libraryFinePerDay = entity.getLibraryFine();
         this.isActive = entity.isActive();
         this.status = entity.getStatus();

@@ -61,4 +61,12 @@ public class LibrarianController {
     public List<BookResponse> getBooks() {
         return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
     }
+
+    @PostMapping(value="/librarian/notifyBorrowers")
+    public String notifyBorrowers(){
+        borrowService.notifyBorrowers();
+        return "OK";
+    }
+    //librarybookworms21
+    //1!br4ryb00kw0rm8
 }
