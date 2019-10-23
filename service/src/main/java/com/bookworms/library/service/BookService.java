@@ -9,7 +9,6 @@ import com.bookworms.library.service.domain.BookStatus;
 import org.springframework.stereotype.Service;
 
 import com.bookworms.library.dao.entities.BookEntity;
-import com.bookworms.library.dao.repositories.BookDao;
 import com.bookworms.library.dao.repositories.BookRepository;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Genre;
@@ -18,11 +17,9 @@ import com.bookworms.library.service.domain.PrintType;
 @Service
 public class BookService {
 
-    private final BookDao bookDao;
     private final BookRepository bookRepository;
 
-    public BookService(final BookDao bookDao, BookRepository bookRepository) {
-        this.bookDao = bookDao;
+    public BookService(final BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -38,7 +35,7 @@ public class BookService {
                 book.getGenre().toString(),
                 book.getPrintType().toString(),
                 status);
-        BookEntity savedBook = bookDao.save(bookEntity);
+        BookEntity savedBook = bookRepository.save(bookEntity);
         return new Book(savedBook.getId(),
                 savedBook.getAuthor(),
                 savedBook.getTitle(),
