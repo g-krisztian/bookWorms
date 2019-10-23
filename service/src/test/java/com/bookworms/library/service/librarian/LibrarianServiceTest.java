@@ -54,8 +54,6 @@ public class LibrarianServiceTest {
         assertEquals(expectedName, result.getUserData().getFullName());
         assertEquals(expectedEmail, result.getUserData().getEmail());
         assertEquals(expectedId, result.getUserData().getId());
-        assertTrue(result.getBorrows().isEmpty());
-        assertTrue(result.getSubscriptions().isEmpty());
     }
 
 }

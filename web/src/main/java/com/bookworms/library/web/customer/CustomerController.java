@@ -37,4 +37,9 @@ public class CustomerController {
         return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
     }
 
+    @PostMapping("/customer/subscribe")
+    public BookResponse subscribe(@RequestBody CreateBorrowRequest createBorrowRequest){
+        return new BookResponse( borrowService.subscribe(createBorrowRequest.getCustomer().getUserData().getId(),createBorrowRequest.getBook().getId()));
+    }
+
 }

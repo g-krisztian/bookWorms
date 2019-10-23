@@ -46,8 +46,6 @@ public class LibrarianControllerTest {
         CreateCustomerResponse result = underTest.createCustomer(input);
 
         // THEN
-        assertTrue(result.getBorrows().isEmpty());
-        assertTrue(result.getSubscriptions().isEmpty());
         assertTrue(result.getIsActive());
         assertEquals(expectedId, result.getUserData().getId());
         assertEquals(expectedFullName, result.getUserData().getFullName());

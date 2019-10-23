@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import com.bookworms.library.dao.entities.BorrowEnity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Relationship between customer and borrowed book. Both startDate and endDate is within the borrowing time range.

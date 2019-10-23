@@ -27,4 +27,8 @@ public class BookStatus {
     public boolean isAvailable() {
         return availableCopies > 0;
     }
+
+    public void addSubscriber(Customer customer) {
+        this.subscribers.add(customer);
+    }
 }
