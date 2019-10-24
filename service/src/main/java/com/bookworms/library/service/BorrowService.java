@@ -44,17 +44,23 @@ public class BorrowService {
         Customer customer = new Customer(customerEntity);
         BookEntity bookEntity = bookRepository.getOne(bookRequest.getId());
         Book book = new Book(bookEntity);
-        Borrow borrow = new Borrow(customer,book,LocalDate.now(),LocalDate.now(),BigDecimal.ZERO,"Book not available");
+        Borrow borrow = new Borrow(customer,
+                book,
+                LocalDate.now(),
+                LocalDate.now(),
+                BigDecimal.ZERO,
+                "Book not available");
         BookStatus savedStatus = book.getStatus();
         if (savedStatus.isAvailable()) {
-        BorrowEnity borrowEnity = new BorrowEnity(
-                customerEntity,
-                bookEntity,
-                LocalDate.now(),
-                LocalDate.now().plusWeeks(2L),
-                BigDecimal.ZERO,
-                status);
-        borrow = new Borrow(borrowRepository.save(borrowEnity));
+            bookEntity.getStatus().setAvailableCopies(bookEntity.getStatus().getAvailableCopies() - 1);
+            BorrowEnity borrowEnity = new BorrowEnity(
+                    customerEntity,
+                    bookEntity,
+                    LocalDate.now(),
+                    LocalDate.now().plusWeeks(2L),
+                    BigDecimal.ZERO,
+                    status);
+            borrow = new Borrow(borrowRepository.save(borrowEnity));
         }
         return borrow;
     }
