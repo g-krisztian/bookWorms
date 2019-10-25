@@ -1,36 +1,25 @@
 # frontend
 
-FIXME: description
+Frontend application for L2+ library application
 
-## Installation
-
-Download from http://example.com/FIXME.
 
 ## Usage
+Run the backend application first
 
-FIXME: explanation
+Depending on clojure and leiningen
 
-    $ java -jar frontend-0.1.0-standalone.jar [args]
+    $ cd frontend
+    $ lein run
+
+You can connect to frontend via 8085 port
 
 ## Options
 
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+There is no options yet
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
