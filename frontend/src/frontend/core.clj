@@ -3,11 +3,14 @@
   (:require
     [compojure.core :refer [defroutes GET POST]]
     [ring.adapter.jetty :as jetty]
-    [clj-http.client :as client]
-    [clojure.data.json :as json]))
+    [clojure.data.json :as json]
+    [frontend.books :as books]
+    [frontend.customers :as customers]))
 
 (defroutes frontend
-           (GET "/books" []   (client/get "http://localhost:8080/customer/books" {:accept :json})))
+           (GET "/books" []  (books/getbooks))
+           (GET "/customers" [] (customers/getall))
+           (GET "/"  [] (slurp "resources/templates/bootstrap.html")))
 
 (defn -main []
   (jetty/run-jetty frontend {:port 8085}))

@@ -40,6 +40,12 @@ public class LibrarianController {
         return new CreateCustomerResponse(customer.getUserData(), customer.getIsActive());
     }
 
+    @GetMapping(value = "/librarian/getUsers")
+    public List<CreateCustomerResponse> getAllCustomers(){
+        List<Customer> customers = librarianService.getAllCusttomers();
+        return customers.stream().map(c -> new CreateCustomerResponse(c.getUserData(), c.getIsActive())).collect(Collectors.toList());
+    }
+
     @PostMapping(value = "/librarian/createBorrow")
     public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
         Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "active");

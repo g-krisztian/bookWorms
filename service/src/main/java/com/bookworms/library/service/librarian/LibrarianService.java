@@ -7,6 +7,9 @@ import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.UserData;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class LibrarianService {
 
@@ -22,4 +25,7 @@ public class LibrarianService {
         return new Customer(new UserData(customerEntitySaved.getId(), customerEntitySaved.getFullName(), customerEntitySaved.getEmail()), customerEntitySaved.getIsActive());
     }
 
+    public List<Customer> getAllCusttomers() {
+        return customerRepository.findAll().stream().map(Customer::new).collect(Collectors.toList());
+    }
 }
