@@ -1,9 +1,5 @@
 package com.bookworms.library.service.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.bookworms.library.dao.entities.CustomerEntity;
 import lombok.Getter;
 
