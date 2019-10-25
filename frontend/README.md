@@ -6,7 +6,7 @@ Frontend application for L2+ library application
 ## Usage
 Run the backend application first
 
-Depending on clojure and leiningen
+Depending on clojure and leiningen https://leiningen.org/#install
 
     $ cd frontend
     $ lein run
