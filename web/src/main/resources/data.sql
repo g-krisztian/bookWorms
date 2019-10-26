@@ -31,7 +31,7 @@ create TABLE IF NOT EXISTS books (
     FOREIGN KEY (status_id) REFERENCES bookstatus(id)
 );
 
-MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (book_id_seq.nextval,'Douglas Adams','The Hitchhiker\’s Guide to the Galaxy','SCIFI','BOOK',book_status_id_seq.currval);
+MERGE INTO books (id,author,title,genre,print_type,status_id) VALUES (book_id_seq.nextval,'Douglas Adams','The Hitchhiker\'s Guide to the Galaxy','SCIFI','BOOK',book_status_id_seq.currval);
 
 create TABLE IF NOT EXISTS borrows(
     id bigint NOT NULL,

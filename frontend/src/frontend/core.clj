@@ -3,17 +3,22 @@
   (:require
     [compojure.core :refer [defroutes GET POST]]
     [ring.adapter.jetty :as jetty]
+    [ring.middleware.params :as params]
     [clojure.data.json :as json]
     [frontend.books :as books]
     [frontend.customers :as customers]
     [frontend.mainpage :as mainpage]))
 
+
 (defroutes frontend
-           (GET "/books" []  (books/getbooks))
+           (GET "/" [] (mainpage/mainpage))
+           (GET "/favicon.ico" [] (slurp "resources/static/favicon.ico"))
+           (GET "/books" [] (books/getbooks))
            (GET "/customers" [] (customers/getall))
            (GET "/createCustomer" [] (customers/createForm))
-           (POST "/createCustomer" []  #(:body %))
-           (GET "/"  [] (mainpage/mainpage)))
+           (POST "/createCustomer" [fullname email] (customers/postCustomer fullname email)))
+
+(def app (params/wrap-params frontend))
 
 (defn -main []
-  (jetty/run-jetty frontend {:port 8085}))
+  (jetty/run-jetty app {:port 8085}))
