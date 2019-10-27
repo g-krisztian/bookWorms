@@ -12,4 +12,10 @@ public class LibrarianSteps extends AbstractSteps {
     public void theLibrarianCallsCreateCustomer() throws Throwable {
         post("/librarian/createCustomer", TEST_CUSTOMER);
     }
+
+    @When("^the librarian asks for all books$")
+    public void theLibrarianCallsBooks() throws Throwable {
+        get("/librarian/books");
+    }
+
 }
