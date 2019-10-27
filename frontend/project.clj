@@ -7,6 +7,7 @@
                  [ring "1.7.0"]
                  [compojure "1.6.1"]
                  [clj-http "3.10.0"]
+                 [hiccup-table "0.2.0"]
                  [org.clojure/data.json "0.2.6"]]
 
   :main ^:skip-aot frontend.core
