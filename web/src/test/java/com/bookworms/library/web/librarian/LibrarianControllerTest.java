@@ -49,7 +49,7 @@ public class LibrarianControllerTest {
         String expectedEmail = "outputEmail";
         String inputEmail = "inputEmail";
         String inputFullName = "inputFullName";
-        CreateCustomerRequestBody input = createCustomeRequestBody(inputEmail, inputFullName);
+        CreateCustomerRequestBody input = new CreateCustomerRequestBody(inputFullName, inputEmail);
         when(librarianService.createCustomer(inputFullName, inputEmail)).thenReturn(new Customer(new UserData(expectedId, expectedFullName, expectedEmail), true));
 
         // WHEN
@@ -87,10 +87,4 @@ public class LibrarianControllerTest {
         assertTrue(actualBook.getAvailable());
     }
 
-    private CreateCustomerRequestBody createCustomeRequestBody(String inputEmail, String inputFullName) {
-        CreateCustomerRequestBody input = new CreateCustomerRequestBody();
-        input.setEmail(inputEmail);
-        input.setFullName(inputFullName);
-        return input;
-    }
 }

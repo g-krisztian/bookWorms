@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "BookWorms_Library",
-		"_postman_id": "57cdcd45-a67f-269a-3818-ed81ae63847d",
+		"_postman_id": "b1ea079a-6be8-4f40-8f3f-eac2b3f44207",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -50,12 +50,36 @@
 					"response": []
 				},
 				{
+					"name": "createBook",
+					"request": {
+						"url": "localhost:8080/book/createBook",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"author\": \"author\",\n\t\"title\": \"title\",\n\t\"genre\": \"ACTION\",\n\t\"printType\": \"BOOK\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Books",
 					"request": {
 						"url": "localhost:8080/librarian/books",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -91,53 +115,15 @@
 						"url": "localhost:8080/customer/books",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Book",
-			"description": "",
-			"item": [
-				{
-					"name": "createBook",
-					"request": {
-						"url": "localhost:8080/book/createBook",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"author\": \"author\",\n\t\"title\": \"title\",\n\t\"genre\": \"ACTION\",\n\t\"printType\": \"BOOK\"\n}"
+							"raw": ""
 						},
 						"description": ""
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "shutdown",
-			"request": {
-				"url": "http://localhost:8080/actuator/shutdown",
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"description": ""
-			},
-			"response": []
 		}
 	]
 }
