@@ -1,6 +1,5 @@
 package com.bookworms.library.acceptanceTest.steps;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -28,8 +27,6 @@ public class ResponseSteps extends AbstractSteps {
         Map<String, Object> userData = getUserData(response);
         Assert.assertEquals("some test name", userData.get("fullName"));
         Assert.assertEquals("test email", userData.get("email"));
-        Assert.assertTrue(((List)response.get("borrows")).isEmpty());
-        Assert.assertTrue(((List)response.get("subscriptions")).isEmpty());
         Assert.assertTrue((Boolean)response.get("isActive"));
     }
 
