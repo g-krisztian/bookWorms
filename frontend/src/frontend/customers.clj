@@ -17,9 +17,6 @@
                ;:data-tr-attrs        {:onclick (format "window.location='/librarian/customer/%s'"  (get customers ) :id)}
 
                :data-value-transform (fn [label-key val]
-                                       (if (= :email label-key)
-                                         [:a {:href (str "mailto:" val)} val]
-                                         val)
                                        (if (= :id label-key)
                                          [:a {:href (str "/librarian/customer/" val)} val]
                                          val)) }
