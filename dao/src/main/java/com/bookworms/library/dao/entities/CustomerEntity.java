@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers", uniqueConstraints =
+    @UniqueConstraint(columnNames ={ "email"}))
 @Getter
 @Setter
 public class CustomerEntity {
@@ -16,6 +17,7 @@ public class CustomerEntity {
     @SequenceGenerator(name = "customer_id_seq_gen", sequenceName = "customer_id_seq", allocationSize = 1)
     private Long id;
     private String fullName;
+
     private String email;
     private Boolean isActive;
 

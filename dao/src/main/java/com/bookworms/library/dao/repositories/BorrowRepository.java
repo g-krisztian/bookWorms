@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 @Transactional
 public interface BorrowRepository extends JpaRepository<BorrowEnity, Long> {
+    List<BorrowEnity> findAllByStatus(String status);
 }

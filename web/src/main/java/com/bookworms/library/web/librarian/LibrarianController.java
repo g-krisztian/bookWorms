@@ -76,4 +76,29 @@ public class LibrarianController {
         borrowService.notifyBorrowers();
         return "OK";
     }
+
+    @GetMapping(value = "librarian/getPendingBorrows")
+    public List<CreateBorrowResponse> getPendingBorrows(){
+        List<Borrow> borrows = borrowService.getBorrowByState("pending");
+        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "librarian/getActiveBorrows")
+    public List<CreateBorrowResponse> getActiveBorrows(){
+        List<Borrow> borrows = borrowService.getBorrowByState("active");
+        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "librarian/getReturningBorrows")
+    public List<CreateBorrowResponse> getReturningBorrows(){
+        List<Borrow> borrows = borrowService.getBorrowByState("returning");
+        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "librarian/getClosedBorrows")
+    public List<CreateBorrowResponse> getClosedBorrows(){
+        List<Borrow> borrows = borrowService.getBorrowByState("closed");
+        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+    }
+
 }

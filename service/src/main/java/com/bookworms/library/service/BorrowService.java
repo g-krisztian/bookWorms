@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -112,5 +113,9 @@ public class BorrowService {
                         .map(customerRepository::getOne)
                 .collect(Collectors.toList())
                 ));
+    }
+
+    public List<Borrow> getBorrowByState(String status) {
+        return borrowRepository.findAllByStatus(status).stream().map(Borrow::new).collect(Collectors.toList());
     }
 }
