@@ -12,19 +12,17 @@
 
         value (client/get "http://localhost:8080/customer/books" {:accept :json})
         books (json/read-str (:body value) :key-fn keyword)
+        bookswithlinks (map #(assoc %
+                               :edit (str  "<a class=\"btn btn-default btn-xs\" href=\"/librarian/book/" (:id %) "\" role=\"button\">EDIT</a>")
+                               :action (str  "<a class=\"btn btn-default btn-xs\" href=\"/librarian/book/" (:id %) "\" role=\"button\">ACTION</a>"))
+                            books)
         attr-fns {:table-attrs          {:class "table table-hover"}
                   :th-attrs             (fn [label-key _] {:class (name label-key)})
-                  ;:data-tr-attrs        {:onclick (format "window.location='/librarian/customer/%s'" :row)}
-
                   :data-value-transform (fn [label-key val]
                                           (case label-key
                                             :id [:a {:href (str "/librarian/book/" val)} val]
-                                            :edit [:button.btn.btn-default.btn-sm {:type "button"} " Edit "]
-                                            :action [:button.btn.btn-default.btn-sm {:type "button"} "Small button"]
-                                            ;[:a.btn.btn-default {:href " #" :role " button "} " Action "]
-
                                             val)
                                           )}
-        table (hiccup.table/to-table1d books [:id "id" :author "Author" :title "title" :genres "Genre" :printType "type" :available "available" :edit "" :action ""] attr-fns)
+        table (hiccup.table/to-table1d bookswithlinks [:id "id" :author "Author" :title "title" :genres "Genre" :printType "type" :available "available" :edit "" :action ""] attr-fns)
         ]
     (str (str/replace page "<!-- insert navbar here -->" navbar) (markup/html table))))
