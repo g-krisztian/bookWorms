@@ -16,7 +16,10 @@
            (GET "/books" [] (books/getbooks))
            (GET "/customers" [] (customers/getall))
            (GET "/createCustomer" [] (customers/createForm))
-           (POST "/createCustomer" [fullname email] (customers/postCustomer fullname email)))
+           (POST "/createCustomer" [fullname email] (customers/postCustomer fullname email))
+           (GET "/createBook" [] (books/createForm))
+           (POST "/createBook" [author title genre printType copies] (books/postBook author title genre printType copies))
+           )
 
 (def app (params/wrap-params frontend))
 

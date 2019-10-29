@@ -12,7 +12,7 @@
      value (client/get "http://localhost:8080/librarian/getUsers" {:accept :json})
      customers (map #(% :userData) (json/read-str (:body value) :key-fn keyword))
 
-     attr-fns {:table-attrs          {:class "table table-hover"}
+     attr-fns {:table-attrs          {:class "table table-hover" :style "max-width:500px; margin-left:7%" }
                :th-attrs             (fn [label-key _] {:class (name label-key)})
                ;:data-tr-attrs        {:onclick (format "window.location='/librarian/customer/%s'"  (get customers ) :id)}
 
