@@ -10,17 +10,17 @@
     [page (slurp "resources/templates/main.html")
      navbar (slurp "resources/templates/navbar.html")
      value (client/get "http://localhost:8080/librarian/getUsers" {:accept :json})
-     customers (map #(% :userData) (json/read-str (:body value) :key-fn keyword))
+     customers (map #(assoc (:userData %) :active (:isActive %)) (json/read-str (:body value) :key-fn keyword))
+
 
      attr-fns {:table-attrs          {:class "table table-hover" :style "max-width:500px; margin-left:7%" }
                :th-attrs             (fn [label-key _] {:class (name label-key)})
-               ;:data-tr-attrs        {:onclick (format "window.location='/librarian/customer/%s'"  (get customers ) :id)}
-
                :data-value-transform (fn [label-key val]
-                                       (if (= :id label-key)
-                                         [:a {:href (str "/librarian/customer/" val)} val]
+                                       (case label-key
+                                         :email (str  " <a href=\"mailto:" val "\">"val "</a>")
+                                         :active (if val "active" "Not active")
                                          val)) }
-     table (hiccup.table/to-table1d customers [:id "id" :fullName "Name" :email "e-mail"] attr-fns)
+     table (hiccup.table/to-table1d customers [:fullName "Name" :email "e-mail" :active "active"] attr-fns)
      ]
     (str/replace page "<!-- insert navbar here -->" (str navbar (markup/html table)))
   )
