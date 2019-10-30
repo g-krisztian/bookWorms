@@ -16,10 +16,7 @@ import com.bookworms.library.web.customer.domain.create.CreateBorrowResponse;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LibrarianController {
@@ -69,6 +66,11 @@ public class LibrarianController {
     @GetMapping(value = "/librarian/books")
     public List<BookResponse> getBooks() {
         return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/librarian/book/{bookId}")
+    public BookResponse getBook(@PathVariable Long bookId) {
+        return new BookResponse(bookService.getBook(bookId));
     }
 
     @PostMapping(value = "/librarian/notifyBorrowers")

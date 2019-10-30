@@ -47,4 +47,8 @@ public class BookService {
     public List<Book> getBooks() {
         return bookRepository.findAll().stream().map(Book::new).collect(Collectors.toList());
     }
+
+    public Book getBook(Long bookId) {
+        return new Book(bookRepository.getOne(bookId));
+    }
 }
