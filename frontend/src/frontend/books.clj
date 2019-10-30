@@ -16,7 +16,7 @@
                                :edit (str "<a class=\"btn btn-default btn-xs\" href=\"/librarian/book/" (:id %) "\" role=\"button\">EDIT</a>")
                                :action (str "<a class=\"btn btn-default btn-xs\" href=\"/librarian/book/" (:id %) "\" role=\"button\">ACTION</a>"))
                             books)
-        attr-fns {:table-attrs          {:class "table table-hover" :style "width:50%;margin-left:7%"}
+        attr-fns {:table-attrs          {:class "table table-hover" :style "width:50%;margin-left:7%; border: 1px solid lightgray;"}
                   :th-attrs             (fn [label-key _] {:class (name label-key)})
                   :data-value-transform (fn [label-key val]
                                           (case label-key
