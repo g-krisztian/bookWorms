@@ -13,6 +13,7 @@
      customers (map #(assoc (:userData %) :active (:isActive %)) (json/read-str (:body value) :key-fn keyword))
 
 
+
      attr-fns {:table-attrs          {:class "table table-hover" :style "max-width:500px; margin-left:7%; border: 1px solid lightgray;" }
                :th-attrs             (fn [label-key _] {:class (name label-key)})
                :data-value-transform (fn [label-key val]
