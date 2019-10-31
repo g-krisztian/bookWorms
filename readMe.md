@@ -12,6 +12,9 @@ TODO Short description of the application.
 ##### Using
 * Address: localhost:8080 
 * Postman (Collection V2): src/postman/
+
+ [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/196f31bd711898bc2616)
+
 ##### Shut down
 * POST localhost:8080/actuator/shutdown
 * alternative way :
