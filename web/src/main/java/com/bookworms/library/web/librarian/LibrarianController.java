@@ -9,10 +9,11 @@ import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.*;
 import com.bookworms.library.service.librarian.LibrarianService;
 import com.bookworms.library.web.customer.domain.BookResponse;
+import com.bookworms.library.web.customer.domain.create.ModifyBorrowRequest;
 import com.bookworms.library.web.librarian.domain.create.CreateBookRequest;
 import com.bookworms.library.web.librarian.domain.create.CreateBookResponse;
 import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowResponse;
+import com.bookworms.library.web.customer.domain.create.BorrowResponse;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
 
@@ -44,9 +45,21 @@ public class LibrarianController {
     }
 
     @PostMapping(value = "/librarian/createBorrow")
-    public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
+    public BorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
         Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "active");
-        return new CreateBorrowResponse(borrow);
+        return new BorrowResponse(borrow);
+    }
+
+    @PutMapping(value = "/librarian/activateBorrow")
+    public BorrowResponse activateBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
+        Borrow borrow = borrowService.modifyBorrow(borrowRequest.getBorrowId(), "active");
+        return new BorrowResponse(borrow);
+    }
+
+    @PutMapping(value = "/librarian/closeBorrow")
+    public BorrowResponse closeBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
+        Borrow borrow = borrowService.closeBorrow(borrowRequest.getBorrowId());
+        return new BorrowResponse(borrow);
     }
 
     @PostMapping(value = "/librarian/createBook")
@@ -80,27 +93,27 @@ public class LibrarianController {
     }
 
     @GetMapping(value = "librarian/getPendingBorrows")
-    public List<CreateBorrowResponse> getPendingBorrows(){
+    public List<BorrowResponse> getPendingBorrows(){
         List<Borrow> borrows = borrowService.getBorrowByState("pending");
-        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+        return borrows.stream().map(BorrowResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping(value = "librarian/getActiveBorrows")
-    public List<CreateBorrowResponse> getActiveBorrows(){
+    public List<BorrowResponse> getActiveBorrows(){
         List<Borrow> borrows = borrowService.getBorrowByState("active");
-        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+        return borrows.stream().map(BorrowResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping(value = "librarian/getReturningBorrows")
-    public List<CreateBorrowResponse> getReturningBorrows(){
+    public List<BorrowResponse> getReturningBorrows(){
         List<Borrow> borrows = borrowService.getBorrowByState("returning");
-        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+        return borrows.stream().map(BorrowResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping(value = "librarian/getClosedBorrows")
-    public List<CreateBorrowResponse> getClosedBorrows(){
+    public List<BorrowResponse> getClosedBorrows(){
         List<Borrow> borrows = borrowService.getBorrowByState("closed");
-        return borrows.stream().map(CreateBorrowResponse::new).collect(Collectors.toList());
+        return borrows.stream().map(BorrowResponse::new).collect(Collectors.toList());
     }
 
 }

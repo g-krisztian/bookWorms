@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CreateBorrowResponse {
+public class BorrowResponse {
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final BigDecimal libraryFinePerDay;
@@ -21,7 +21,7 @@ public class CreateBorrowResponse {
     private final Book book;
     private final String status;
 
-    public CreateBorrowResponse(Borrow borrow) {
+    public BorrowResponse(Borrow borrow) {
         this.id = borrow.getId();
         this.customer = borrow.getCustomer();
         this.book = borrow.getBook();

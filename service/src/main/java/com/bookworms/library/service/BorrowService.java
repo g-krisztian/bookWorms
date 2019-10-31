@@ -111,11 +111,30 @@ public class BorrowService {
                         .map(Customer::getUserData)
                         .map(UserData::getId)
                         .map(customerRepository::getOne)
-                .collect(Collectors.toList())
-                ));
+                        .collect(Collectors.toList())
+        ));
     }
 
     public List<Borrow> getBorrowByState(String status) {
         return borrowRepository.findAllByStatus(status).stream().map(Borrow::new).collect(Collectors.toList());
+    }
+
+    public Borrow modifyBorrow(Long borrowId, String status) {
+        BorrowEnity entity = borrowRepository.getOne(borrowId);
+        entity.setStatus(status);
+        return new Borrow(borrowRepository.save(entity));
+    }
+
+    @Transactional
+    public Borrow closeBorrow(Long borrowId) {
+        BorrowEnity entity = borrowRepository.getOne(borrowId);
+        entity.setStatus("closed");
+
+        Borrow borrow = new Borrow(entity);
+        BookStatus status = borrow.getBook().getStatus();
+        status.setAvailableCopies(status.getAvailableCopies() + 1);
+        borrow.setStatus("closed");
+        updateStatus(status);
+        return new Borrow(borrowRepository.save(entity));
     }
 }

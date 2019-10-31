@@ -5,12 +5,10 @@ import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.Borrow;
 import com.bookworms.library.web.customer.domain.BookResponse;
 import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowResponse;
+import com.bookworms.library.web.customer.domain.create.BorrowResponse;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.bookworms.library.web.customer.domain.create.ModifyBorrowRequest;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,9 +25,9 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/customer/createBorrow")
-    public CreateBorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
+    public BorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
         Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "pending");
-        return new CreateBorrowResponse(borrow);
+        return new BorrowResponse(borrow);
     }
 
     @GetMapping(value = "/customer/books")
@@ -40,6 +38,11 @@ public class CustomerController {
     @PostMapping("/customer/subscribe")
     public BookResponse subscribe(@RequestBody CreateBorrowRequest createBorrowRequest){
         return new BookResponse( borrowService.subscribe(createBorrowRequest.getCustomer().getUserData().getId(),createBorrowRequest.getBook().getId()));
+    }
+    @PutMapping(value = "/customer/closeBorrow")
+    public BorrowResponse closeBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
+        Borrow borrow = borrowService.modifyBorrow(borrowRequest.getBorrowId(), "returning");
+        return new BorrowResponse(borrow);
     }
 
 }

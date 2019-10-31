@@ -6,11 +6,13 @@ import java.time.LocalDate;
 import com.bookworms.library.dao.entities.BorrowEnity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Relationship between customer and borrowed book. Both startDate and endDate is within the borrowing time range.
  */
 @Getter
+@Setter
 public class Borrow {
 
     public static final int MAXIMUM_DAYS_TO_BORROW = 43; //2 weeks from now(+1) on the same day.. And prolonged max twice (+2*14) TODO delete this comment :D
