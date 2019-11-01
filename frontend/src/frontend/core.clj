@@ -6,6 +6,7 @@
     [ring.middleware.params :as params]
     [clojure.data.json :as json]
     [frontend.books :as books]
+    [frontend.borrow :as borrow]
     [frontend.customers :as customers]
     [frontend.mainpage :as mainpage]))
 
@@ -19,6 +20,7 @@
            (POST "/createCustomer" [fullname email] (customers/postCustomer fullname email))
            (GET "/createBook" [] (books/createForm))
            (POST "/createBook" [author title genre printType copies] (books/postBook author title genre printType copies))
+           (GET "/borrows/pending" [] (borrow/pending))
            )
 
 (def app (params/wrap-params frontend))

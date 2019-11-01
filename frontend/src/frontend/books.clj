@@ -10,7 +10,7 @@
         page (slurp "resources/templates/main.html")
         navbar (slurp "resources/templates/navbar.html")
 
-        value (client/get "http://localhost:8080/customer/books" {:accept :json})
+        value (client/get "http://localhost:8080/librarian/books" {:accept :json})
         books (json/read-str (:body value) :key-fn keyword)
         bookswithlinks (map #(assoc %
                                :edit (str "<a class=\"btn btn-default btn-xs\" href=\"/librarian/book/" (:id %) "\" role=\"button\">EDIT</a>")
