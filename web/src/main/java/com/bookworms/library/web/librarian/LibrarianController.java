@@ -3,7 +3,7 @@ package com.bookworms.library.web.librarian;
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.*;
-import com.bookworms.library.service.librarian.LibrarianService;
+import com.bookworms.library.service.CustomerService;
 import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
 import com.bookworms.library.web.customer.domain.response.BookResponse;
 import com.bookworms.library.web.customer.domain.response.BorrowResponse;
@@ -20,25 +20,25 @@ import java.util.stream.Collectors;
 @RestController
 public class LibrarianController {
 
-    private final LibrarianService librarianService;
+    private final CustomerService customerService;
     private final BorrowService borrowService;
     private final BookService bookService;
 
-    public LibrarianController(LibrarianService librarianService, BorrowService borrowService, BookService bookService) {
-        this.librarianService = librarianService;
+    public LibrarianController(CustomerService customerService, BorrowService borrowService, BookService bookService) {
+        this.customerService = customerService;
         this.borrowService = borrowService;
         this.bookService = bookService;
     }
 
     @PostMapping(value = "/librarian/createCustomer")
     public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody) {
-        Customer customer = librarianService.createCustomer(createCustomerRequestBody.getFullName(), createCustomerRequestBody.getEmail());
+        Customer customer = customerService.createCustomer(createCustomerRequestBody.getFullName(), createCustomerRequestBody.getEmail());
         return new CreateCustomerResponse(customer.getUserData(), customer.getIsActive());
     }
 
     @GetMapping(value = "/librarian/getUsers")
     public List<CreateCustomerResponse> getAllCustomers(){
-        List<Customer> customers = librarianService.getAllCustomers();
+        List<Customer> customers = customerService.getAllCustomers();
         return customers.stream().map(c -> new CreateCustomerResponse(c.getUserData(), c.getIsActive())).collect(Collectors.toList());
     }
 

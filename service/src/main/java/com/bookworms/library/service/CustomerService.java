@@ -1,4 +1,4 @@
-package com.bookworms.library.service.librarian;
+package com.bookworms.library.service;
 
 import org.springframework.stereotype.Component;
 
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class LibrarianService {
+public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private CustomerTransformer customerTransformer;
 
-    public LibrarianService(CustomerRepository customerRepository, CustomerTransformer customerTransformer) {
+    public CustomerService(CustomerRepository customerRepository, CustomerTransformer customerTransformer) {
         this.customerRepository = customerRepository;
         this.customerTransformer = customerTransformer;
     }

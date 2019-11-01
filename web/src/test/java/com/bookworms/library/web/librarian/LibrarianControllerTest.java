@@ -8,7 +8,7 @@ import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
 import com.bookworms.library.service.domain.UserData;
-import com.bookworms.library.service.librarian.LibrarianService;
+import com.bookworms.library.service.CustomerService;
 import com.bookworms.library.web.customer.domain.response.BookResponse;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
 import com.bookworms.library.web.librarian.domain.response.CreateCustomerResponse;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class LibrarianControllerTest {
 
-    private LibrarianService librarianService;
+    private CustomerService customerService;
     private BorrowService borrowService;
     private BookService bookService;
 
@@ -35,10 +35,10 @@ public class LibrarianControllerTest {
 
     @Before
     public void setUp() {
-        librarianService = Mockito.mock(LibrarianService.class);
+        customerService = Mockito.mock(CustomerService.class);
         borrowService = Mockito.mock(BorrowService.class);
         bookService = Mockito.mock(BookService.class);
-        underTest = new LibrarianController(librarianService, borrowService, bookService);
+        underTest = new LibrarianController(customerService, borrowService, bookService);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class LibrarianControllerTest {
         String inputEmail = "inputEmail";
         String inputFullName = "inputFullName";
         CreateCustomerRequestBody input = new CreateCustomerRequestBody(inputFullName, inputEmail);
-        when(librarianService.createCustomer(inputFullName, inputEmail)).thenReturn(new Customer(new UserData(expectedId, expectedFullName, expectedEmail), true));
+        when(customerService.createCustomer(inputFullName, inputEmail)).thenReturn(new Customer(new UserData(expectedId, expectedFullName, expectedEmail), true));
 
         // WHEN
         CreateCustomerResponse result = underTest.createCustomer(input);

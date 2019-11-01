@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.bookworms.library.service.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -14,13 +15,13 @@ import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.transformer.CustomerTransformer;
 
-public class LibrarianServiceTest {
+public class customerServiceTest {
 
     // dependencies
     private CustomerRepository customerRepository;
 
     private ArgumentCaptor<CustomerEntity> customerEntityCaptor;
-    private LibrarianService underTest;
+    private CustomerService underTest;
     private CustomerTransformer customerTransformer;
 
     @Before
@@ -29,7 +30,7 @@ public class LibrarianServiceTest {
         customerRepository = Mockito.mock(CustomerRepository.class);
         customerTransformer = Mockito.mock(CustomerTransformer.class);
 
-        underTest = new LibrarianService(customerRepository, customerTransformer);
+        underTest = new CustomerService(customerRepository, customerTransformer);
     }
 
     @Test
