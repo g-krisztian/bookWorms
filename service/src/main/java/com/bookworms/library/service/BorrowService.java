@@ -14,6 +14,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import com.bookworms.library.service.transformer.BookTransformer;
+import com.bookworms.library.service.transformer.BorrowTransformer;
+import com.bookworms.library.service.transformer.CustomerTransformer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,22 +32,28 @@ public class BorrowService {
     private final BookRepository bookRepository;
     private final BookStatusRepository bookStatusRepository;
     private final JavaMailSender javaMailSender;
+    private final BookTransformer bookTrasformer;
+    private final BorrowTransformer borrowTransformer;
+    private CustomerTransformer customerTransformer;
 
     public BorrowService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository,
-                         JavaMailSender javaMailSender, BookStatusRepository bookStatusRepository) {
+                         JavaMailSender javaMailSender, BookStatusRepository bookStatusRepository, BookTransformer bookTrasformer, BorrowTransformer borrowTransformer, CustomerTransformer customerTransformer) {
         this.borrowRepository = borrowRepository;
         this.customerRepository = customerRepository;
         this.bookRepository = bookRepository;
         this.javaMailSender = javaMailSender;
         this.bookStatusRepository = bookStatusRepository;
+        this.bookTrasformer = bookTrasformer;
+        this.borrowTransformer = borrowTransformer;
+        this.customerTransformer = customerTransformer;
     }
 
     @Transactional
     public Borrow createBorrow(Customer customerRequest, Book bookRequest, String status) {
         CustomerEntity customerEntity = customerRepository.getOne(customerRequest.getUserData().getId());
-        Customer customer = new Customer(customerEntity);
+        Customer customer = customerTransformer.transform(customerEntity);
         BookEntity bookEntity = bookRepository.getOne(bookRequest.getId());
-        Book book = new Book(bookEntity);
+        Book book = bookTrasformer.transform(bookEntity);
         Borrow borrow = new Borrow(customer,
                 book,
                 LocalDate.now(),
@@ -61,7 +70,7 @@ public class BorrowService {
                     LocalDate.now().plusWeeks(2L),
                     BigDecimal.ZERO,
                     status);
-            borrow = new Borrow(borrowRepository.save(borrowEnity));
+            borrow = borrowTransformer.transform(borrowRepository.save(borrowEnity));
         }
         return borrow;
     }
@@ -70,7 +79,7 @@ public class BorrowService {
     public void notifyBorrowers() {
         borrowRepository.findAll()
                 .stream()
-                .map(Borrow::new)
+                .map(borrowTransformer::transform)
                 .filter(b -> "active".equals(b.getStatus()))
                 .filter(borrow -> borrow.getEndDate().minusDays(4).compareTo(LocalDate.now()) < 0)
                 .forEach(this::sendNotifyEmail);
@@ -94,12 +103,12 @@ public class BorrowService {
     }
 
     public Book subscribe(Long customerId, Long bookId) {
-        Book book = new Book(bookRepository.getOne(bookId));
-        Customer customer = new Customer(customerRepository.getOne(customerId));
+        Book book = bookTrasformer.transform(bookRepository.getOne(bookId));
+        Customer customer = customerTransformer.transform(customerRepository.getOne(customerId));
         BookStatus status = book.getStatus();
         status.addSubscriber(customer);
         updateStatus(status);
-        return new Book(bookRepository.getOne(bookId));
+        return bookTrasformer.transform(bookRepository.getOne(bookId));
     }
 
     private void updateStatus(BookStatus status) {
@@ -116,13 +125,13 @@ public class BorrowService {
     }
 
     public List<Borrow> getBorrowByState(String status) {
-        return borrowRepository.findAllByStatus(status).stream().map(Borrow::new).collect(Collectors.toList());
+        return borrowRepository.findAllByStatus(status).stream().map(borrowTransformer::transform).collect(Collectors.toList());
     }
 
     public Borrow modifyBorrow(Long borrowId, String status) {
         BorrowEnity entity = borrowRepository.getOne(borrowId);
         entity.setStatus(status);
-        return new Borrow(borrowRepository.save(entity));
+        return borrowTransformer.transform(borrowRepository.save(entity));
     }
 
     @Transactional
@@ -130,11 +139,11 @@ public class BorrowService {
         BorrowEnity entity = borrowRepository.getOne(borrowId);
         entity.setStatus("closed");
 
-        Borrow borrow = new Borrow(entity);
+        Borrow borrow = borrowTransformer.transform(entity);
         BookStatus status = borrow.getBook().getStatus();
         status.setAvailableCopies(status.getAvailableCopies() + 1);
         borrow.setStatus("closed");
         updateStatus(status);
-        return new Borrow(borrowRepository.save(entity));
+        return borrowTransformer.transform(borrowRepository.save(entity));
     }
 }

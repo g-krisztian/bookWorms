@@ -40,7 +40,7 @@ public class LibrarianController {
 
     @GetMapping(value = "/librarian/getUsers")
     public List<CreateCustomerResponse> getAllCustomers(){
-        List<Customer> customers = librarianService.getAllCusttomers();
+        List<Customer> customers = librarianService.getAllCustomers();
         return customers.stream().map(c -> new CreateCustomerResponse(c.getUserData(), c.getIsActive())).collect(Collectors.toList());
     }
 

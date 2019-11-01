@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.bookworms.library.dao.entities.BorrowEnity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class Borrow {
 
     public static final int MAXIMUM_DAYS_TO_BORROW = 43; //2 weeks from now(+1) on the same day.. And prolonged max twice (+2*14) TODO delete this comment :D
@@ -38,15 +40,4 @@ public class Borrow {
         this.libraryFinePerDay = libraryFine;
         this.status = status;
     }
-
-    public Borrow(BorrowEnity entity) {
-        this.book = new Book(entity.getBook());
-        this.customer = new Customer(entity.getCustomer());
-        this.id = entity.getId();
-        this.startDate = entity.getStartDate();
-        this.endDate = entity.getEndDate();
-        this.libraryFinePerDay = entity.getLibraryFine();
-        this.status = entity.getStatus();
-    }
-
 }

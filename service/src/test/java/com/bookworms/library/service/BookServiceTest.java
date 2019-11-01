@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.List;
 
+import com.bookworms.library.service.transformer.CustomerTransformer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -14,21 +15,23 @@ import com.bookworms.library.dao.entities.BookEntity;
 import com.bookworms.library.dao.entities.BookStatusEntity;
 import com.bookworms.library.dao.repositories.BookRepository;
 import com.bookworms.library.service.domain.Book;
-import com.bookworms.library.service.domain.BookStatus;
 import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
+import com.bookworms.library.service.transformer.BookTransformer;
 
 public class BookServiceTest {
 
     private BookRepository bookRepository;
 
     private BookService underTest;
+    private BookTransformer bookTransformer;
 
     @Before
     public void setup() {
         bookRepository = Mockito.mock(BookRepository.class);
+        bookTransformer = new BookTransformer(new CustomerTransformer());
 
-        underTest = new BookService(bookRepository);
+        underTest = new BookService(bookRepository, bookTransformer);
     }
 
     @Test

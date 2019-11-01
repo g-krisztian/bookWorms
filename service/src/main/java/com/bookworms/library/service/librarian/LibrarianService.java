@@ -6,6 +6,7 @@ import com.bookworms.library.dao.entities.CustomerEntity;
 import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.UserData;
+import com.bookworms.library.service.transformer.CustomerTransformer;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class LibrarianService {
 
     private final CustomerRepository customerRepository;
+    private CustomerTransformer customerTransformer;
 
-    public LibrarianService(CustomerRepository customerRepository) {
+    public LibrarianService(CustomerRepository customerRepository, CustomerTransformer customerTransformer) {
         this.customerRepository = customerRepository;
+        this.customerTransformer = customerTransformer;
     }
 
     public Customer createCustomer(String fullName, String email) {
@@ -25,7 +28,7 @@ public class LibrarianService {
         return new Customer(new UserData(customerEntitySaved.getId(), customerEntitySaved.getFullName(), customerEntitySaved.getEmail()), customerEntitySaved.getIsActive());
     }
 
-    public List<Customer> getAllCusttomers() {
-        return customerRepository.findAll().stream().map(Customer::new).collect(Collectors.toList());
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll().stream().map(customerTransformer::transform).collect(Collectors.toList());
     }
 }

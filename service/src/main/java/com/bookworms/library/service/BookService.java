@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bookworms.library.dao.entities.BookStatusEntity;
-import com.bookworms.library.service.domain.BookStatus;
 import org.springframework.stereotype.Service;
 
 import com.bookworms.library.dao.entities.BookEntity;
@@ -13,14 +12,17 @@ import com.bookworms.library.dao.repositories.BookRepository;
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
+import com.bookworms.library.service.transformer.BookTransformer;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookTransformer bookTransformer;
 
-    public BookService(final BookRepository bookRepository) {
+    public BookService(final BookRepository bookRepository, BookTransformer bookTransformer) {
         this.bookRepository = bookRepository;
+        this.bookTransformer = bookTransformer;
     }
 
     public Book createBook(final Book book) {
@@ -36,19 +38,14 @@ public class BookService {
                 book.getPrintType().toString(),
                 status);
         BookEntity savedBook = bookRepository.save(bookEntity);
-        return new Book(savedBook.getId(),
-                savedBook.getAuthor(),
-                savedBook.getTitle(),
-                Genre.valueOf(savedBook.getGenre()),
-                PrintType.valueOf(savedBook.getPrintType()),
-                new BookStatus(savedBook.getStatus()));
+        return  bookTransformer.transform(savedBook);
     }
 
     public List<Book> getBooks() {
-        return bookRepository.findAll().stream().map(Book::new).collect(Collectors.toList());
+        return bookRepository.findAll().stream().map(bookTransformer::transform).collect(Collectors.toList());
     }
 
     public Book getBook(Long bookId) {
-        return new Book(bookRepository.getOne(bookId));
+        return bookTransformer.transform(bookRepository.getOne(bookId));
     }
 }
