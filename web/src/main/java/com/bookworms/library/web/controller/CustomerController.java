@@ -1,11 +1,12 @@
-package com.bookworms.library.web.customer;
+package com.bookworms.library.web.controller;
 
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.Borrow;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.response.BookResponse;
-import com.bookworms.library.web.customer.domain.response.BorrowResponse;
+import com.bookworms.library.web.domain.request.CreateBorrowRequest;
+import com.bookworms.library.web.domain.response.BookResponse;
+import com.bookworms.library.web.domain.response.BorrowResponse;
+import com.bookworms.library.web.transformer.BookResponseTransformer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class CustomerController {
 
     private final BorrowService borrowService;
     private final BookService bookService;
+    private final BookResponseTransformer bookResponseTransformer;
 
-    public CustomerController(BorrowService borrowService, BookService bookService) {
+    public CustomerController(BorrowService borrowService, BookService bookService, BookResponseTransformer bookResponseTransformer) {
         this.borrowService = borrowService;
         this.bookService = bookService;
+        this.bookResponseTransformer = bookResponseTransformer;
     }
 
     @PostMapping(value = "/customer/createBorrow")
@@ -30,12 +33,17 @@ public class CustomerController {
 
     @GetMapping(value = "/customer/books")
     public List<BookResponse> getBooks() {
-        return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
+        return bookService.getBooks().stream().map(bookResponseTransformer::minimalTransformer).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/customer/book/{bookId}")
+    public BookResponse getBook(@PathVariable Long bookId) {
+        return bookResponseTransformer.minimalTransformer(bookService.getBook(bookId));
     }
 
     @PostMapping("/customer/subscribe")
     public BookResponse subscribe(@RequestBody CreateBorrowRequest createBorrowRequest){
-        return new BookResponse( borrowService.subscribe(createBorrowRequest.getCustomerId(),createBorrowRequest.getBookId()));
+        return bookResponseTransformer.minimalTransformer( borrowService.subscribe(createBorrowRequest.getCustomerId(),createBorrowRequest.getBookId()));
     }
     @PutMapping(value = "/customer/closeBorrow/{borrowId}")
     public BorrowResponse closeBorrow(@PathVariable Long borrowId) {

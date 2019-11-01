@@ -1,16 +1,19 @@
-package com.bookworms.library.web.librarian;
+package com.bookworms.library.web.controller;
 
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.*;
 import com.bookworms.library.service.CustomerService;
-import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.response.BookResponse;
-import com.bookworms.library.web.customer.domain.response.BorrowResponse;
-import com.bookworms.library.web.librarian.domain.create.CreateBookRequest;
-import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
-import com.bookworms.library.web.librarian.domain.response.CreateBookResponse;
-import com.bookworms.library.web.librarian.domain.response.CreateCustomerResponse;
+import com.bookworms.library.web.domain.request.CreateBorrowRequest;
+import com.bookworms.library.web.domain.response.BookResponse;
+import com.bookworms.library.web.domain.response.BorrowResponse;
+import com.bookworms.library.web.domain.request.CreateBookRequest;
+import com.bookworms.library.web.domain.request.CreateCustomerRequestBody;
+import com.bookworms.library.web.domain.response.CustomerResponse;
+import com.bookworms.library.web.domain.response.DetailedBookResponse;
+import com.bookworms.library.web.transformer.BookResponseTransformer;
+import com.bookworms.library.web.transformer.CustomerResponseTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -23,23 +26,28 @@ public class LibrarianController {
     private final CustomerService customerService;
     private final BorrowService borrowService;
     private final BookService bookService;
+    private final BookResponseTransformer bookResponseTransformer;
+    private final CustomerResponseTransformer customerResponseTransformer;
 
-    public LibrarianController(CustomerService customerService, BorrowService borrowService, BookService bookService) {
+    @Autowired
+    public LibrarianController(CustomerService customerService, BorrowService borrowService, BookService bookService, BookResponseTransformer bookResponseTransformer, CustomerResponseTransformer customerResponseTransformer) {
         this.customerService = customerService;
         this.borrowService = borrowService;
         this.bookService = bookService;
+        this.bookResponseTransformer = bookResponseTransformer;
+        this.customerResponseTransformer = customerResponseTransformer;
     }
 
     @PostMapping(value = "/librarian/createCustomer")
-    public CreateCustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody) {
+    public CustomerResponse createCustomer(@RequestBody CreateCustomerRequestBody createCustomerRequestBody) {
         Customer customer = customerService.createCustomer(createCustomerRequestBody.getFullName(), createCustomerRequestBody.getEmail());
-        return new CreateCustomerResponse(customer.getUserData(), customer.getIsActive());
+        return customerResponseTransformer.transform(customer);
     }
 
-    @GetMapping(value = "/librarian/getUsers")
-    public List<CreateCustomerResponse> getAllCustomers(){
+    @GetMapping(value = "/librarian/getCustomers")
+    public List<CustomerResponse> getAllCustomers(){
         List<Customer> customers = customerService.getAllCustomers();
-        return customers.stream().map(c -> new CreateCustomerResponse(c.getUserData(), c.getIsActive())).collect(Collectors.toList());
+        return customers.stream().map(customerResponseTransformer::transform).collect(Collectors.toList());
     }
 
     @PostMapping(value = "/librarian/createBorrow")
@@ -61,7 +69,7 @@ public class LibrarianController {
     }
 
     @PostMapping(value = "/librarian/createBook")
-    public CreateBookResponse createBook(@RequestBody CreateBookRequest createBookRequest) {
+    public DetailedBookResponse createBook(@RequestBody CreateBookRequest createBookRequest) {
         Long copies = createBookRequest.getCopies().orElse(1L);
         Book book = new Book(null,
                 createBookRequest.getAuthor(),
@@ -71,17 +79,17 @@ public class LibrarianController {
                 new BookStatus(null, copies, copies, Collections.EMPTY_LIST)
         );
         Book savedBook = bookService.createBook(book);
-        return new CreateBookResponse(savedBook);
+        return bookResponseTransformer.detailedTransformer(savedBook);
     }
 
     @GetMapping(value = "/librarian/books")
     public List<BookResponse> getBooks() {
-        return bookService.getBooks().stream().map(BookResponse::new).collect(Collectors.toList());
+        return bookService.getBooks().stream().map(bookResponseTransformer::minimalTransformer).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/librarian/book/{bookId}")
-    public BookResponse getBook(@PathVariable Long bookId) {
-        return new BookResponse(bookService.getBook(bookId));
+    public DetailedBookResponse getBook(@PathVariable Long bookId) {
+        return bookResponseTransformer.detailedTransformer(bookService.getBook(bookId));
     }
 
     @PostMapping(value = "/librarian/notifyBorrowers")

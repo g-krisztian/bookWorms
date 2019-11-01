@@ -54,7 +54,7 @@ public class customerServiceTest {
         assertEquals(inputName, capturedCustomerEntity.getFullName());
         assertEquals(inputEmail, capturedCustomerEntity.getEmail());
 
-        assertTrue(result.getIsActive());
+        assertTrue(result.getActive());
         assertEquals(expectedName, result.getUserData().getFullName());
         assertEquals(expectedEmail, result.getUserData().getEmail());
         assertEquals(expectedId, result.getUserData().getId());

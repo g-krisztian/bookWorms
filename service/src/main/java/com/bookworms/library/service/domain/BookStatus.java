@@ -1,13 +1,12 @@
 package com.bookworms.library.service.domain;
 
-import com.bookworms.library.dao.entities.BookStatusEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ public class BookStatus {
     private Long id;
     private Long overAllCopies;
     private Long availableCopies;
-    private List<Customer> subscribers;
+    private List<Customer> subscribers = new ArrayList<>();
 
     public boolean isAvailable() {
         return availableCopies > 0;

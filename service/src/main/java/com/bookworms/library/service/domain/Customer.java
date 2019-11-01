@@ -1,6 +1,5 @@
 package com.bookworms.library.service.domain;
 
-import com.bookworms.library.dao.entities.CustomerEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,10 +7,10 @@ import lombok.Getter;
 @Builder
 public class Customer {
     private final UserData userData;
-    private final Boolean isActive;
+    private final Boolean active;
 
-    public Customer(UserData userData, Boolean isActive) {
+    public Customer(UserData userData, Boolean active) {
         this.userData = userData;
-        this.isActive = isActive;
+        this.active = active;
     }
 }

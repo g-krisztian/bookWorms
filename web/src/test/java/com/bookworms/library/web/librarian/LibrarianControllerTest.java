@@ -9,10 +9,13 @@ import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.CustomerService;
-import com.bookworms.library.web.customer.domain.response.BookResponse;
-import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
-import com.bookworms.library.web.librarian.domain.response.CreateCustomerResponse;
+import com.bookworms.library.web.controller.LibrarianController;
+import com.bookworms.library.web.domain.response.BookResponse;
+import com.bookworms.library.web.domain.request.CreateCustomerRequestBody;
+import com.bookworms.library.web.domain.response.CustomerResponse;
 
+import com.bookworms.library.web.transformer.BookResponseTransformer;
+import com.bookworms.library.web.transformer.CustomerResponseTransformer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -32,13 +35,17 @@ public class LibrarianControllerTest {
     private BookService bookService;
 
     private LibrarianController underTest;
+    private BookResponseTransformer bookResponseTransformer;
+    private CustomerResponseTransformer customerResponseTransformer;
 
     @Before
     public void setUp() {
         customerService = Mockito.mock(CustomerService.class);
         borrowService = Mockito.mock(BorrowService.class);
         bookService = Mockito.mock(BookService.class);
-        underTest = new LibrarianController(customerService, borrowService, bookService);
+        bookResponseTransformer = new BookResponseTransformer(customerResponseTransformer);
+        customerResponseTransformer = new CustomerResponseTransformer();
+        underTest = new LibrarianController(customerService, borrowService, bookService, bookResponseTransformer, customerResponseTransformer);
     }
 
     @Test
@@ -53,13 +60,13 @@ public class LibrarianControllerTest {
         when(customerService.createCustomer(inputFullName, inputEmail)).thenReturn(new Customer(new UserData(expectedId, expectedFullName, expectedEmail), true));
 
         // WHEN
-        CreateCustomerResponse result = underTest.createCustomer(input);
+        CustomerResponse result = underTest.createCustomer(input);
 
         // THEN
         assertTrue(result.getIsActive());
-        assertEquals(expectedId, result.getUserData().getId());
-        assertEquals(expectedFullName, result.getUserData().getFullName());
-        assertEquals(expectedEmail, result.getUserData().getEmail());
+        assertEquals(expectedId, result.getId());
+        assertEquals(expectedFullName, result.getFullName());
+        assertEquals(expectedEmail, result.getEmail());
     }
 
     @Test
@@ -83,7 +90,6 @@ public class LibrarianControllerTest {
         assertEquals(expectedId, actualBook.getId().longValue());
         assertEquals(expectedGenre.getValue(), actualBook.getGenres());
         assertEquals(expectedPrintType.getValue(), actualBook.getPrintType());
-        assertEquals(expectedSubscribers, actualBook.getSubscribers());
         assertTrue(actualBook.getAvailable());
     }
 

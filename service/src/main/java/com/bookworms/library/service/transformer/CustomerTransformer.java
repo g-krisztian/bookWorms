@@ -10,7 +10,7 @@ public class CustomerTransformer {
     public Customer transform(CustomerEntity customer) {
         return Customer.builder()
                 .userData(new UserData(customer.getId(),customer.getFullName(),customer.getEmail()))
-                .isActive(customer.getIsActive())
+                .active(customer.getIsActive())
                 .build();
     }
 }

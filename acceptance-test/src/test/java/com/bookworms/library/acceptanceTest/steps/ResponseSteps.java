@@ -29,9 +29,8 @@ public class ResponseSteps extends AbstractSteps {
     @And("^the responded customer is correct$")
     public void theRespondedCustomerIsCorrect() throws Throwable {
         Map<String, Object> response = getLastPostContentAs(OBJECT_RESOURCE_TYPE);
-        Map<String, Object> userData = getUserData(response);
-        assertEquals("some test name", userData.get("fullName"));
-        assertEquals("test email", userData.get("email"));
+        assertEquals("some test name", response.get("fullName"));
+        assertEquals("test email", response.get("email"));
         assertTrue((Boolean) response.get("isActive"));
     }
 
