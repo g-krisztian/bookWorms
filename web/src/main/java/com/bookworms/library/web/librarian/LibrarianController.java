@@ -1,23 +1,21 @@
 package com.bookworms.library.web.librarian;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.*;
 import com.bookworms.library.service.librarian.LibrarianService;
-import com.bookworms.library.web.customer.domain.BookResponse;
-import com.bookworms.library.web.customer.domain.create.ModifyBorrowRequest;
-import com.bookworms.library.web.librarian.domain.create.CreateBookRequest;
-import com.bookworms.library.web.librarian.domain.create.CreateBookResponse;
 import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.create.BorrowResponse;
+import com.bookworms.library.web.customer.domain.response.BookResponse;
+import com.bookworms.library.web.customer.domain.response.BorrowResponse;
+import com.bookworms.library.web.librarian.domain.create.CreateBookRequest;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
-import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
-
+import com.bookworms.library.web.librarian.domain.response.CreateBookResponse;
+import com.bookworms.library.web.librarian.domain.response.CreateCustomerResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class LibrarianController {
@@ -46,19 +44,19 @@ public class LibrarianController {
 
     @PostMapping(value = "/librarian/createBorrow")
     public BorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
-        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "active");
+        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomerId(), createBorrowRequest.getBookId(), "active");
         return new BorrowResponse(borrow);
     }
 
-    @PutMapping(value = "/librarian/activateBorrow")
-    public BorrowResponse activateBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
-        Borrow borrow = borrowService.modifyBorrow(borrowRequest.getBorrowId(), "active");
+    @PutMapping(value = "/librarian/activateBorrow/{borrowId}")
+    public BorrowResponse activateBorrow(@PathVariable Long borrowId) {
+        Borrow borrow = borrowService.modifyBorrow(borrowId, "active");
         return new BorrowResponse(borrow);
     }
 
-    @PutMapping(value = "/librarian/closeBorrow")
-    public BorrowResponse closeBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
-        Borrow borrow = borrowService.closeBorrow(borrowRequest.getBorrowId());
+    @PutMapping(value = "/librarian/closeBorrow/{borrowId}")
+    public BorrowResponse closeBorrow(@PathVariable Long borrowId) {
+        Borrow borrow = borrowService.closeBorrow(borrowId);
         return new BorrowResponse(borrow);
     }
 

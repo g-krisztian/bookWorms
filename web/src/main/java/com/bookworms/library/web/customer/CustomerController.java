@@ -3,11 +3,9 @@ package com.bookworms.library.web.customer;
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
 import com.bookworms.library.service.domain.Borrow;
-import com.bookworms.library.web.customer.domain.BookResponse;
 import com.bookworms.library.web.customer.domain.create.CreateBorrowRequest;
-import com.bookworms.library.web.customer.domain.create.BorrowResponse;
-
-import com.bookworms.library.web.customer.domain.create.ModifyBorrowRequest;
+import com.bookworms.library.web.customer.domain.response.BookResponse;
+import com.bookworms.library.web.customer.domain.response.BorrowResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public class CustomerController {
 
     @PostMapping(value = "/customer/createBorrow")
     public BorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
-        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomer(), createBorrowRequest.getBook(), "pending");
+        Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomerId(), createBorrowRequest.getBookId(), "pending");
         return new BorrowResponse(borrow);
     }
 
@@ -37,11 +35,11 @@ public class CustomerController {
 
     @PostMapping("/customer/subscribe")
     public BookResponse subscribe(@RequestBody CreateBorrowRequest createBorrowRequest){
-        return new BookResponse( borrowService.subscribe(createBorrowRequest.getCustomer().getUserData().getId(),createBorrowRequest.getBook().getId()));
+        return new BookResponse( borrowService.subscribe(createBorrowRequest.getCustomerId(),createBorrowRequest.getBookId()));
     }
-    @PutMapping(value = "/customer/closeBorrow")
-    public BorrowResponse closeBorrow(@RequestBody ModifyBorrowRequest borrowRequest) {
-        Borrow borrow = borrowService.modifyBorrow(borrowRequest.getBorrowId(), "returning");
+    @PutMapping(value = "/customer/closeBorrow/{borrowId}")
+    public BorrowResponse closeBorrow(@PathVariable Long borrowId) {
+        Borrow borrow = borrowService.modifyBorrow(borrowId, "returning");
         return new BorrowResponse(borrow);
     }
 

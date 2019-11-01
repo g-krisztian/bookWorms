@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateBorrowRequest {
-    private Book book;
-    private Customer customer;
+    private Long bookId;
+    private Long customerId;
 }

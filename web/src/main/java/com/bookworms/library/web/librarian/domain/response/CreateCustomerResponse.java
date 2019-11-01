@@ -1,4 +1,4 @@
-package com.bookworms.library.web.librarian.domain.create;
+package com.bookworms.library.web.librarian.domain.response;
 
 import com.bookworms.library.service.domain.UserData;
 

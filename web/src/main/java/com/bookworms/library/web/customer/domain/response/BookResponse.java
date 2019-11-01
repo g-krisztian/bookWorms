@@ -1,8 +1,7 @@
-package com.bookworms.library.web.customer.domain;
+package com.bookworms.library.web.customer.domain.response;
 
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Customer;
-import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
 import lombok.Getter;
 import lombok.Setter;
 

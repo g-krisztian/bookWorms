@@ -9,9 +9,9 @@ import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.librarian.LibrarianService;
-import com.bookworms.library.web.customer.domain.BookResponse;
+import com.bookworms.library.web.customer.domain.response.BookResponse;
 import com.bookworms.library.web.librarian.domain.create.CreateCustomerRequestBody;
-import com.bookworms.library.web.librarian.domain.create.CreateCustomerResponse;
+import com.bookworms.library.web.librarian.domain.response.CreateCustomerResponse;
 
 import org.junit.Before;
 import org.junit.Test;

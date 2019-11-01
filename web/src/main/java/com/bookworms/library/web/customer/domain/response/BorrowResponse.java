@@ -1,4 +1,4 @@
-package com.bookworms.library.web.customer.domain.create;
+package com.bookworms.library.web.customer.domain.response;
 
 import com.bookworms.library.service.domain.Book;
 import com.bookworms.library.service.domain.Borrow;

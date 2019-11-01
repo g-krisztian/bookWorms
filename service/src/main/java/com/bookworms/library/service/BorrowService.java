@@ -9,6 +9,7 @@ import com.bookworms.library.dao.repositories.BookStatusRepository;
 import com.bookworms.library.dao.repositories.BorrowRepository;
 import com.bookworms.library.dao.repositories.CustomerRepository;
 import com.bookworms.library.service.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,6 +37,7 @@ public class BorrowService {
     private final BorrowTransformer borrowTransformer;
     private CustomerTransformer customerTransformer;
 
+    @Autowired
     public BorrowService(BorrowRepository borrowRepository, CustomerRepository customerRepository, BookRepository bookRepository,
                          JavaMailSender javaMailSender, BookStatusRepository bookStatusRepository, BookTransformer bookTrasformer, BorrowTransformer borrowTransformer, CustomerTransformer customerTransformer) {
         this.borrowRepository = borrowRepository;
@@ -49,10 +51,10 @@ public class BorrowService {
     }
 
     @Transactional
-    public Borrow createBorrow(Customer customerRequest, Book bookRequest, String status) {
-        CustomerEntity customerEntity = customerRepository.getOne(customerRequest.getUserData().getId());
+    public Borrow createBorrow(Long customerId, Long bookId, String status) {
+        CustomerEntity customerEntity = customerRepository.getOne(customerId);
         Customer customer = customerTransformer.transform(customerEntity);
-        BookEntity bookEntity = bookRepository.getOne(bookRequest.getId());
+        BookEntity bookEntity = bookRepository.getOne(bookId);
         Book book = bookTrasformer.transform(bookEntity);
         Borrow borrow = new Borrow(customer,
                 book,
