@@ -10,7 +10,7 @@
     [page (slurp "resources/templates/main.html")
      navbar (slurp "resources/templates/navbar.html")
      value (client/get "http://localhost:8080/librarian/getCustomers" {:accept :json})
-     customers (map #(assoc (:userData %) :active (:isActive %)) (json/read-str (:body value) :key-fn keyword))
+     customers (json/read-str (:body value) :key-fn keyword)
 
 
 

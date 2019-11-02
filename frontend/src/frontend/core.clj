@@ -20,7 +20,8 @@
            (POST "/createCustomer" [fullname email] (customers/postCustomer fullname email))
            (GET "/createBook" [] (books/createForm))
            (POST "/createBook" [author title genre printType copies] (books/postBook author title genre printType copies))
-           (GET "/borrows/pending" [] (borrow/pending))
+           (GET "/getPendingBorrows" [] (borrow/pending))
+           (GET "/activateBorrow/:id/:redirect" [id redirect] (str id " " redirect))
            )
 
 (def app (params/wrap-params frontend))
