@@ -1,5 +1,6 @@
 package com.bookworms.library.service;
 
+import com.bookworms.library.service.domain.app.SearchField;
 import org.springframework.stereotype.Component;
 
 import com.bookworms.library.dao.entities.CustomerEntity;
@@ -8,18 +9,27 @@ import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.transformer.CustomerTransformer;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private CustomerTransformer customerTransformer;
+    private final CustomerTransformer customerTransformer;
+
+    private final Map<SearchField, Function<String, List<CustomerEntity>>> searchMethodMap;
 
     public CustomerService(CustomerRepository customerRepository, CustomerTransformer customerTransformer) {
         this.customerRepository = customerRepository;
         this.customerTransformer = customerTransformer;
+        this.searchMethodMap = new HashMap<SearchField, Function<String, List<CustomerEntity>>>() {{
+            put(SearchField.ID, getFindAllByIdFunction());
+            put(SearchField.EMAIL, customerRepository::findByEmail);
+            put(SearchField.NAME, customerRepository::findByName);
+        }};
     }
 
     public Customer createCustomer(String fullName, String email) {
@@ -29,6 +39,19 @@ public class CustomerService {
     }
 
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll().stream().map(customerTransformer::transform).collect(Collectors.toList());
+        return convertCustomerEntities(customerRepository.findAll());
+    }
+
+    public List<Customer> findCustomer(SearchField searchInField, String value) {
+        Function<String, List<CustomerEntity>> searchMethod = searchMethodMap.get(searchInField);
+        return convertCustomerEntities(searchMethod.apply(value));
+    }
+
+    private List<Customer> convertCustomerEntities(List<CustomerEntity> foundCustomerEntities) {
+        return foundCustomerEntities.stream().map(customerTransformer::transform).collect(Collectors.toList());
+    }
+
+    private Function<String, List<CustomerEntity>> getFindAllByIdFunction() {
+        return (value) -> customerRepository.findAllById(Collections.singletonList(Long.valueOf(value)));
     }
 }

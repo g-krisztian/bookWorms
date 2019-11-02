@@ -1,20 +1,110 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "92f2dbf1-1b9b-4fbc-9bff-ed1c310fcd42",
 		"name": "BookWorms_Library",
-		"_postman_id": "b1ea079a-6be8-4f40-8f3f-eac2b3f44207",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Librarian",
-			"description": "",
 			"item": [
+				{
+					"name": "FindCustomer",
+					"item": [
+						{
+							"name": "Find_Customer_By_Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/librarian/findCustomer?field=ID&value=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"librarian",
+										"findCustomer"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "ID"
+										},
+										{
+											"key": "value",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find_Customer_Name_Starts_With",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/librarian/findCustomer?field=NAME&value=Ja",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"librarian",
+										"findCustomer"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "NAME"
+										},
+										{
+											"key": "value",
+											"value": "Ja"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find_Customer_By_Email",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/librarian/findCustomer?field=EMAIL&value=Janos_Pillinger@epam.com",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"librarian",
+										"findCustomer"
+									],
+									"query": [
+										{
+											"key": "field",
+											"value": "EMAIL"
+										},
+										{
+											"key": "value",
+											"value": "Janos_Pillinger@epam.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "createCustomer",
 					"request": {
-						"url": "localhost:8080/librarian/createCustomer",
 						"method": "POST",
 						"header": [
 							{
@@ -24,16 +114,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"customer\": {\n\t\t\"fullName\": \"Janos Pillinger\",\n\t\t\"email\": \"Janos_Pillinger@epam.com\"\n\t},\n\t\"book\":{}\n}"
+							"raw": "{\n\t\"fullName\": \"Janos Pillinger\",\n\t\"email\": \"Janos_Pillinger@epam_uqique_email_adress.com\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/librarian/createCustomer"
 					},
 					"response": []
 				},
 				{
 					"name": "Librarian createBorrow",
 					"request": {
-						"url": "localhost:8080/librarian/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -45,14 +134,13 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/librarian/createBorrow"
 					},
 					"response": []
 				},
 				{
 					"name": "createBook",
 					"request": {
-						"url": "localhost:8080/book/createBook",
 						"method": "POST",
 						"header": [
 							{
@@ -66,34 +154,28 @@
 							"mode": "raw",
 							"raw": "{\n\t\"author\": \"author\",\n\t\"title\": \"title\",\n\t\"genre\": \"ACTION\",\n\t\"printType\": \"BOOK\"\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/book/createBook"
 					},
 					"response": []
 				},
 				{
 					"name": "Books",
 					"request": {
-						"url": "localhost:8080/librarian/books",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": "localhost:8080/librarian/books"
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Customer",
-			"description": "",
 			"item": [
 				{
 					"name": "Customer createBorrow",
 					"request": {
-						"url": "localhost:8080/customer/createBorrow",
 						"method": "POST",
 						"header": [
 							{
@@ -105,25 +187,22 @@
 							"mode": "raw",
 							"raw": "{\"customer\":\n{\n    \"userData\": {\n        \"id\": 1,\n        \"fullName\": \"Janos Pillinger\",\n        \"email\": \"Janos_Pillinger@epam.com\"\n    },\n    \"borrows\": [],\n    \"subscriptions\": [],\n    \"isActive\": true\n},\n\"book\":{\"id\":1}\n}"
 						},
-						"description": ""
+						"url": "localhost:8080/customer/createBorrow"
 					},
 					"response": []
 				},
 				{
 					"name": "Books",
 					"request": {
-						"url": "localhost:8080/customer/books",
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": "localhost:8080/customer/books"
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

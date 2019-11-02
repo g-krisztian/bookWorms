@@ -10,10 +10,11 @@ import com.bookworms.library.dao.entities.CustomerEntity;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity,Long> {
-    // TODO Question: org.springframework.data.jpa.repository.JpaRepository VS org.springframework.data.repository.CrudRepository
-    // TODO Question: Naming is CustomerDao VS CustomerRepository
 
-    @Query(value = "SELECT * FROM library_user WHERE fullname=:fullName", nativeQuery = true)
-    List<CustomerEntity> findByName(String fullName);
+    @Query(value = "SELECT * FROM customers WHERE full_name LIKE %:name%", nativeQuery = true)
+    List<CustomerEntity> findByName(String name);
+
+    @Query(value = "SELECT * FROM customers WHERE email=:email", nativeQuery = true)
+    List<CustomerEntity> findByEmail(String email);
 
 }
