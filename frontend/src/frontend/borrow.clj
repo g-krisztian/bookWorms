@@ -2,7 +2,8 @@
   (:require [clojure.data.json :as json]
             [clj-http.client :as client]
             [hiccup.core :as markup]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [frontend.mainpage :as mainpage]))
 
 (def page (slurp "resources/templates/main.html"))
 (def navbar (slurp "resources/templates/navbar.html"))
@@ -25,7 +26,7 @@
                           borrows)
         attr-fns {:table-attrs {:class "table table-hover" :style "width:50%;margin-left:7%; border: 1px solid lightgray;"}}
         table (hiccup.table/to-table1d borrowstable [:book "Book" :customer "Customer" :activate "" :close ""] attr-fns)]
-    (str (str/replace page "<!-- insert navbar here -->" navbar) (markup/html table)))
+    (str (str/replace page "<!-- insert navbar here -->" navbar) "<h1>Pending borrows</h1>" (markup/html table)))
   )
 
 (defn active []
@@ -38,7 +39,7 @@
                           borrows)
         attr-fns {:table-attrs {:class "table table-hover" :style "width:50%;margin-left:7%; border: 1px solid lightgray;"}}
         table (hiccup.table/to-table1d borrowstable [:book "Book" :customer "Customer" :action ""] attr-fns)]
-    (str (str/replace page "<!-- insert navbar here -->" navbar) (markup/html table)))
+    (str (str/replace page "<!-- insert navbar here -->" navbar) "<h1>Active borrows</h1>" (markup/html table)))
   )
 
 (defn returning []
@@ -50,7 +51,7 @@
                           borrows)
         attr-fns {:table-attrs {:class "table table-hover" :style "width:50%;margin-left:7%; border: 1px solid lightgray;"}}
         table (hiccup.table/to-table1d borrowstable [:book "Book" :customer "Customer" :action ""] attr-fns)]
-    (str (str/replace page "<!-- insert navbar here -->" navbar) (markup/html table)))
+    (str (str/replace page "<!-- insert navbar here -->" navbar) "<h1>Returning borrows</h1>" (markup/html table)))
   )
 
 (defn closed []
@@ -61,5 +62,23 @@
                           borrows)
         attr-fns {:table-attrs {:class "table table-hover" :style "width:50%;margin-left:7%; border: 1px solid lightgray;"}}
         table (hiccup.table/to-table1d borrowstable [:book "Book" :customer "Customer" :action ""] attr-fns)]
-    (str (str/replace page "<!-- insert navbar here -->" navbar) (markup/html table)))
+    (str (str/replace page "<!-- insert navbar here -->" navbar) "<h1>Closed borrows</h1>" (markup/html table)))
+  )
+
+(defn close [id redirect]
+  (client/put (str "http://localhost:8080/librarian/closeBorrow/" id))
+  (case redirect
+    "pending" (pending)
+    "active" (active)
+    (mainpage/mainpage)
+    )
+  )
+
+(defn activate [id redirect]
+  (client/put (str "http://localhost:8080/librarian/activateBorrow/" id))
+  (case redirect
+    "pending" (pending)
+    "active" (active)
+    (mainpage/mainpage)
+    )
   )
