@@ -21,7 +21,12 @@
            (GET "/createBook" [] (books/createForm))
            (POST "/createBook" [author title genre printType copies] (books/postBook author title genre printType copies))
            (GET "/getPendingBorrows" [] (borrow/pending))
-           (GET "/activateBorrow/:id/:redirect" [id redirect] (str id " " redirect))
+           (GET "/activateBorrow/:id/:redirect" [id redirect] (str "activate: " id " " redirect))
+           (GET "/getActiveBorrows" [] (borrow/active))
+           (GET "/closeBorrow/:id/:redirect" [id redirect] (str "close: " id " " redirect))
+           (GET "/getReturningBorrows" [] (borrow/returning))
+           (GET "/closeBorrow/:id/:redirect" [id redirect] (str "close: " id " " redirect))
+           (GET "/getClosedBorrows" [] (borrow/closed))
            )
 
 (def app (params/wrap-params frontend))
