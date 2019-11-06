@@ -48,4 +48,9 @@ public class BookService {
     public Book getBook(Long bookId) {
         return bookTransformer.transform(bookRepository.getOne(bookId));
     }
+
+    public List<Book> getUserSubscriptions(Long id) {
+        bookRepository.findAllBookSubscribedByUserId();
+        return null;
+    }
 }

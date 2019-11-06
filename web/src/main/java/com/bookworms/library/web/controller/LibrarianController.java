@@ -6,12 +6,9 @@ import com.bookworms.library.service.domain.*;
 import com.bookworms.library.service.CustomerService;
 import com.bookworms.library.service.domain.app.SearchField;
 import com.bookworms.library.web.domain.request.CreateBorrowRequest;
-import com.bookworms.library.web.domain.response.BookResponse;
-import com.bookworms.library.web.domain.response.BorrowResponse;
+import com.bookworms.library.web.domain.response.*;
 import com.bookworms.library.web.domain.request.CreateBookRequest;
 import com.bookworms.library.web.domain.request.CreateCustomerRequestBody;
-import com.bookworms.library.web.domain.response.CustomerResponse;
-import com.bookworms.library.web.domain.response.DetailedBookResponse;
 import com.bookworms.library.web.exception.LibraryException;
 import com.bookworms.library.web.transformer.BookResponseTransformer;
 import com.bookworms.library.web.transformer.CustomerResponseTransformer;
@@ -59,6 +56,13 @@ public class LibrarianController {
     public List<CustomerResponse> getAllCustomers(){
         List<Customer> customers = customerService.getAllCustomers();
         return customers.stream().map(customerResponseTransformer::transform).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/librarian/getCustomer/:id")
+    public DetailedCustomerResponse getCustomer(@PathVariable Long id){
+        Customer customer = customerService.getCustomer(id);
+        List<Book> subscriptions = bookService.getUserSubscriptions(id);
+        return customerResponseTransformer.detailedTransform(customer);
     }
 
     // Book related

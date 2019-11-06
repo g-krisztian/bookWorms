@@ -2,6 +2,7 @@ package com.bookworms.library.web.transformer;
 
 import com.bookworms.library.service.domain.Customer;
 import com.bookworms.library.web.domain.response.CustomerResponse;
+import com.bookworms.library.web.domain.response.DetailedCustomerResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,5 +14,9 @@ public class CustomerResponseTransformer {
                 .email(customer.getUserData().getEmail())
                 .isActive(customer.getActive())
                 .build();
+    }
+
+    public DetailedCustomerResponse detailedTransform(Customer customer) {
+        return DetailedCustomerResponse.builder().build();
     }
 }

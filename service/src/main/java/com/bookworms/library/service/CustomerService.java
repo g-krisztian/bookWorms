@@ -54,4 +54,8 @@ public class CustomerService {
     private Function<String, List<CustomerEntity>> getFindAllByIdFunction() {
         return (value) -> customerRepository.findAllById(Collections.singletonList(Long.valueOf(value)));
     }
+
+    public Customer getCustomer(Long id) {
+        return customerTransformer.transform(customerRepository.getOne(id));
+    }
 }
