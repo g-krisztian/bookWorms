@@ -25,4 +25,15 @@ public class BookStatus {
     public void addSubscriber(Customer customer) {
         this.subscribers.add(customer);
     }
+
+    public BookStatus createBorrow(){
+        if (isAvailable()) availableCopies -= 1;
+        return this;
+    }
+
+    public BookStatus closeBorrow(){
+        availableCopies += 1;
+        return this;
+    }
+
 }
