@@ -13,4 +13,6 @@ import java.util.List;
 @Transactional
 public interface BorrowRepository extends JpaRepository<BorrowEnity, Long> {
     List<BorrowEnity> findAllByStatus(String status);
+
+    List<BorrowEnity> findAllByCustomerId(Long id);
 }

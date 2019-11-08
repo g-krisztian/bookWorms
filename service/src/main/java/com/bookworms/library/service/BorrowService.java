@@ -148,4 +148,8 @@ public class BorrowService {
         updateStatus(status);
         return borrowTransformer.transform(borrowRepository.save(entity));
     }
+
+    public List<Borrow> getBorrowsByUserId(Long id) {
+        return borrowRepository.findAllByCustomerId(id).stream().map(borrowTransformer::transform).collect(Collectors.toList());
+    }
 }

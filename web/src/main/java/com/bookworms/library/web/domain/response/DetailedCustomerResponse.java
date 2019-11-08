@@ -3,6 +3,7 @@ package com.bookworms.library.web.domain.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public class DetailedCustomerResponse {
     private final String fullName;
     private final String email;
     private final Boolean isActive;
-    private final List<BookResponse> subscribes;
-    private final List<BorrowResponse> borrows;
+    @Setter
+    private List<BookResponse> subscribes;
+    @Setter
+    private List<BorrowResponse> borrows;
 }

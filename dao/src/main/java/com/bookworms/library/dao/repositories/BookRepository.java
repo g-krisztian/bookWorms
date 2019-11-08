@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity,Long> {
-    @Query(value = "SELECT be FROM BookEntity WHERE c CustomerEntity IN be.status.subscribers")
-    List<BookEntity> findAllBookSubscribedByUserId();
+    @Query(value = "SELECT b FROM BookEntity b JOIN b.status s JOIN s.subscribers c WHERE c.id=:id")
+    List<BookEntity> findAllBookSubscribedByUserId(Long id);
+
 }

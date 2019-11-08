@@ -15,6 +15,7 @@ import com.bookworms.library.web.domain.request.CreateCustomerRequestBody;
 import com.bookworms.library.web.domain.response.CustomerResponse;
 
 import com.bookworms.library.web.transformer.BookResponseTransformer;
+import com.bookworms.library.web.transformer.BorrowResponseTransformer;
 import com.bookworms.library.web.transformer.CustomerResponseTransformer;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +38,7 @@ public class LibrarianControllerTest {
     private LibrarianController underTest;
     private BookResponseTransformer bookResponseTransformer;
     private CustomerResponseTransformer customerResponseTransformer;
+    private BorrowResponseTransformer borrowResponseTransformer;
 
     @Before
     public void setUp() {
@@ -45,7 +47,8 @@ public class LibrarianControllerTest {
         bookService = Mockito.mock(BookService.class);
         bookResponseTransformer = new BookResponseTransformer(customerResponseTransformer);
         customerResponseTransformer = new CustomerResponseTransformer();
-        underTest = new LibrarianController(customerService, borrowService, bookService, bookResponseTransformer, customerResponseTransformer);
+        borrowResponseTransformer = new BorrowResponseTransformer(bookResponseTransformer, customerResponseTransformer);
+        underTest = new LibrarianController(customerService, borrowService, bookService, bookResponseTransformer, customerResponseTransformer, borrowResponseTransformer);
     }
 
     @Test

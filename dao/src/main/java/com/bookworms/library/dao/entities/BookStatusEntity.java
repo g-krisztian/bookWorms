@@ -22,7 +22,7 @@ public class BookStatusEntity {
     private Long id;
     private Long overAllCopies;
     private Long availableCopies;
-    @OneToMany
+    @ManyToMany
     private List<CustomerEntity> subscribers;
 
 }

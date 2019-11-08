@@ -50,7 +50,6 @@ public class BookService {
     }
 
     public List<Book> getUserSubscriptions(Long id) {
-        bookRepository.findAllBookSubscribedByUserId();
-        return null;
+        return bookRepository.findAllBookSubscribedByUserId(id).stream().map(bookTransformer::transform).collect(Collectors.toList());
     }
 }

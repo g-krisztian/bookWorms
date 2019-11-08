@@ -1,8 +1,6 @@
 package com.bookworms.library.web.domain.response;
 
-import com.bookworms.library.service.domain.Book;
-import com.bookworms.library.service.domain.Borrow;
-import com.bookworms.library.service.domain.Customer;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,23 +9,14 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
 public class BorrowResponse {
+    private final Long id;
+    private final String status;
     private final LocalDate startDate;
     private final LocalDate endDate;
+    private final CustomerResponse customer;
+    private final BookResponse book;
     private final BigDecimal libraryFinePerDay;
-    private final Long id;
-
-    private final Customer customer;
-    private final Book book;
-    private final String status;
-
-    public BorrowResponse(Borrow borrow) {
-        this.id = borrow.getId();
-        this.customer = borrow.getCustomer();
-        this.book = borrow.getBook();
-        this.startDate = borrow.getStartDate();
-        this.endDate = borrow.getEndDate();
-        this.libraryFinePerDay = borrow.getLibraryFinePerDay();
-        this.status = borrow.getStatus();
-    }
 }
+

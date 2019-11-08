@@ -7,6 +7,8 @@ import com.bookworms.library.web.domain.request.CreateBorrowRequest;
 import com.bookworms.library.web.domain.response.BookResponse;
 import com.bookworms.library.web.domain.response.BorrowResponse;
 import com.bookworms.library.web.transformer.BookResponseTransformer;
+import com.bookworms.library.web.transformer.BorrowResponseTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +20,20 @@ public class CustomerController {
     private final BorrowService borrowService;
     private final BookService bookService;
     private final BookResponseTransformer bookResponseTransformer;
+    private final BorrowResponseTransformer borrowResponseTransformer;
 
-    public CustomerController(BorrowService borrowService, BookService bookService, BookResponseTransformer bookResponseTransformer) {
+    @Autowired
+    public CustomerController(BorrowService borrowService, BookService bookService, BookResponseTransformer bookResponseTransformer, BorrowResponseTransformer borrowResponseTransformer) {
         this.borrowService = borrowService;
         this.bookService = bookService;
         this.bookResponseTransformer = bookResponseTransformer;
+        this.borrowResponseTransformer = borrowResponseTransformer;
     }
 
     @PostMapping(value = "/customer/createBorrow")
     public BorrowResponse createBorrow(@RequestBody CreateBorrowRequest createBorrowRequest) {
         Borrow borrow = borrowService.createBorrow(createBorrowRequest.getCustomerId(), createBorrowRequest.getBookId(), "pending");
-        return new BorrowResponse(borrow);
+        return borrowResponseTransformer.transform(borrow);
     }
 
     @GetMapping(value = "/customer/books")
@@ -48,7 +53,7 @@ public class CustomerController {
     @PutMapping(value = "/customer/closeBorrow/{borrowId}")
     public BorrowResponse closeBorrow(@PathVariable Long borrowId) {
         Borrow borrow = borrowService.modifyBorrow(borrowId, "returning");
-        return new BorrowResponse(borrow);
+        return borrowResponseTransformer.transform(borrow);
     }
 
 }
