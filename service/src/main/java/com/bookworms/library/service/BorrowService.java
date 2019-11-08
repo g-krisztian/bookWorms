@@ -146,9 +146,7 @@ public class BorrowService {
         BorrowEnity entity = borrowRepository.getOne(borrowId);
         entity.setStatus("closed");
         Borrow borrow = borrowTransformer.transform(entity);
-        BookStatus status = borrow.getBook().getStatus();
-        status.closeBorrow();
-        borrow.setStatus("closed");
+        BookStatus status = borrow.getBook().getStatus().closeBorrow();
         updateStatus(status);
         return borrowTransformer.transform(borrowRepository.save(entity));
     }
