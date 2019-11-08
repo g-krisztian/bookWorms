@@ -150,6 +150,26 @@
 					"response": []
 				},
 				{
+					"name": "getCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/librarian/getCustomer/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"librarian",
+								"getCustomer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "CreateBook",
 					"request": {
 						"method": "POST",
@@ -162,7 +182,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\"author\":\"Robert C Martin\",\n\t\"title\":\"Clean Code\",\n\t\"genre\":\"DOCUMENTARY\",\n\t\"printType\":\"BOOK\",\n\t\"copies\":0\n}"
+							"raw": "{\t\"author\":\"Robert C Martin\",\n\t\"title\":\"Clean Code\",\n\t\"genre\":\"DOCUMENTARY\",\n\t\"printType\":\"BOOK\",\n\t\"copies\":10\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/librarian/createBook",
@@ -236,7 +256,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"customerId\":2,\n\"bookId\":1\n}"
+							"raw": "{\"customerId\":2,\n\"bookId\":3\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/librarian/createBorrow",
@@ -445,7 +465,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/customer/closeBorrow/2",
+							"raw": "localhost:8080/customer/closeBorrow/1",
 							"host": [
 								"localhost"
 							],
@@ -453,7 +473,7 @@
 							"path": [
 								"customer",
 								"closeBorrow",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -471,7 +491,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"customerId\":2,\n\"bookId\":2\n}"
+							"raw": "{\"customerId\":1,\n\"bookId\":1\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/customer/subscribe",
