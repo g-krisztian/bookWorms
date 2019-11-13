@@ -69,15 +69,19 @@ public class BorrowService {
         if (savedStatus.isAvailable()) {
             savedStatus.createBorrow();
             borrow.setStatus(status);
-            borrowRepository.save(new BorrowEnity(
-                    customerEntity,
-                    bookEntity,
-                    borrow.getStartDate(),
-                    borrow.getEndDate(),
-                    borrow.getLibraryFinePerDay(),
-                    borrow.getStatus()));
+            borrow.setId(saveBorrow(customerEntity, bookEntity, borrow).getId());
         } else borrow.setStatus("Book not available");
         return borrow;
+    }
+
+    private BorrowEnity saveBorrow(CustomerEntity customerEntity, BookEntity bookEntity, Borrow borrow) {
+        return borrowRepository.save(new BorrowEnity(
+                customerEntity,
+                bookEntity,
+                borrow.getStartDate(),
+                borrow.getEndDate(),
+                borrow.getLibraryFinePerDay(),
+                borrow.getStatus()));
     }
 
     @Scheduled(cron = "0 0 12 * * ?")
@@ -98,7 +102,7 @@ public class BorrowService {
         int days = borrow.getEndDate().compareTo(LocalDate.now());
         String message = String.format("Dear %s!\n" +
                 " The book you borrowed (%s: %s) going to exceed in %d day%s. \n" +
-                " Sincerely: Librarian Team", userName, author, title, days, days > 1 ? "s" : "");
+                " Sincerely: Librarian Team", userName, author, title, days, days == 1 ? "" : "s");
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
@@ -153,5 +157,25 @@ public class BorrowService {
 
     public List<Borrow> getBorrowsByUserId(Long id) {
         return borrowRepository.findAllByCustomerId(id).stream().map(borrowTransformer::transform).collect(Collectors.toList());
+    }
+
+    public void notifySubscribers(Book book) {
+        book.getStatus().getSubscribers().forEach(c -> sendNotifyEmail(book, c));
+    }
+
+    private void sendNotifyEmail(Book book, Customer customer) {
+        String userName = customer.getUserData().getFullName();
+        String email = customer.getUserData().getEmail();
+        String author = book.getAuthor();
+        String title = book.getTitle();
+        String message = String.format("Dear %s!\n" +
+                " The book that you subscribed (%s: %s) is available. \n" +
+                " Sincerely: Librarian Team", userName, author, title);
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject(String.format("%s: %s is available now", author, title));
+        msg.setText(message);
+        javaMailSender.send(msg);
     }
 }

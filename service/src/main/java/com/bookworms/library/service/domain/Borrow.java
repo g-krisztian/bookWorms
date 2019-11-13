@@ -19,7 +19,7 @@ public class Borrow {
 
     public static final int MAXIMUM_DAYS_TO_BORROW = 43; //2 weeks from now(+1) on the same day.. And prolonged max twice (+2*14) TODO delete this comment :D
 
-    private final Long id;
+    private Long id;
     private final Customer customer;
     private final Book book;
     private final LocalDate startDate;

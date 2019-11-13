@@ -116,6 +116,7 @@ public class LibrarianController {
     @PutMapping(value = "/librarian/closeBorrow/{borrowId}")
     public BorrowResponse closeBorrow(@PathVariable Long borrowId) {
         Borrow borrow = borrowService.closeBorrow(borrowId);
+        borrowService.notifySubscribers(borrow.getBook());
         return borrowResponseTransformer.transform(borrow);
     }
 
