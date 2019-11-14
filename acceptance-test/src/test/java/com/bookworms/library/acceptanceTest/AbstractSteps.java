@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.MultiValueMap;
 
 import com.bookworms.library.web.LibraryApplication;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -33,9 +34,10 @@ public abstract class AbstractSteps {
     private static MockHttpServletResponse lastDeleteResponse;
     private static int lastStatusCode;
 
-    protected void get(String url, Object... urlVariable) throws Exception {
+    protected void get(String url, MultiValueMap<String, String> params, Object... urlVariable) throws Exception {
         mvc.perform(MockMvcRequestBuilders.get(url, urlVariable)
                 .accept(MediaType.APPLICATION_JSON)
+                .params(params)
         )
                 .andDo(result -> {
                     lastGetResponse = result.getResponse();

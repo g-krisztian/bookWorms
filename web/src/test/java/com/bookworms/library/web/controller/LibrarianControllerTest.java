@@ -1,4 +1,4 @@
-package com.bookworms.library.web.librarian;
+package com.bookworms.library.web.controller;
 
 import com.bookworms.library.service.BookService;
 import com.bookworms.library.service.BorrowService;
@@ -9,11 +9,13 @@ import com.bookworms.library.service.domain.Genre;
 import com.bookworms.library.service.domain.PrintType;
 import com.bookworms.library.service.domain.UserData;
 import com.bookworms.library.service.CustomerService;
+import com.bookworms.library.service.domain.app.SearchField;
 import com.bookworms.library.web.controller.LibrarianController;
 import com.bookworms.library.web.domain.response.BookResponse;
 import com.bookworms.library.web.domain.request.CreateCustomerRequestBody;
 import com.bookworms.library.web.domain.response.CustomerResponse;
 
+import com.bookworms.library.web.exception.LibraryException;
 import com.bookworms.library.web.transformer.BookResponseTransformer;
 import com.bookworms.library.web.transformer.BorrowResponseTransformer;
 import com.bookworms.library.web.transformer.CustomerResponseTransformer;
@@ -22,6 +24,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -94,6 +97,42 @@ public class LibrarianControllerTest {
         assertEquals(expectedGenre.getValue(), actualBook.getGenres());
         assertEquals(expectedPrintType.getValue(), actualBook.getPrintType());
         assertTrue(actualBook.getAvailable());
+    }
+
+    @Test
+    public void getBooks_ShouldCallService_ReturnResults_WhenSearchFieldIsValid(){
+        // GIVEN
+        String validSearchField = "EMAIL";
+        String expectedEmailAddress = "myemail address";
+
+        Long expectedId = 42L;
+        String expectedName = "Paul";
+        ArrayList<Customer> customers = new ArrayList<>();
+        customers.add(new Customer(new UserData(expectedId, expectedName, expectedEmailAddress), true));
+        when(customerService.findCustomer(SearchField.EMAIL, expectedEmailAddress)).thenReturn(customers);
+
+        // WHEN
+        List<CustomerResponse> result = underTest.findCustomer(validSearchField, expectedEmailAddress);
+
+        // THEN
+        CustomerResponse customerResponse = result.get(0);
+        assertEquals(expectedId, customerResponse.getId());
+        assertEquals(expectedName, customerResponse.getFullName());
+        assertEquals(expectedEmailAddress, customerResponse.getEmail());
+        assertTrue(customerResponse.getIsActive());
+    }
+
+    @Test(expected = LibraryException.class)
+    public void getBooks_ThrowException_WhenSearchFieldIsInvalid(){
+        // GIVEN
+        String validSearchField = "NOT_VALID_FIELD";
+        String expectedEmailAddress = "myemail address";
+
+        // WHEN
+        List<CustomerResponse> result = underTest.findCustomer(validSearchField, expectedEmailAddress);
+
+        // THEN
+        // EXCEPTION THROWN
     }
 
 }

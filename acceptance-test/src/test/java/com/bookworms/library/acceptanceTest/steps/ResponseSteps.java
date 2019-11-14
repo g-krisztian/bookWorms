@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
-
 import com.bookworms.library.acceptanceTest.AbstractSteps;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -26,11 +24,11 @@ public class ResponseSteps extends AbstractSteps {
         assertEquals(200, getLastStatusCode());
     }
 
-    @And("^the responded customer is correct$")
-    public void theRespondedCustomerIsCorrect() throws Throwable {
+    @And("^the responded customer is correct with emails:$")
+    public void theRespondedCustomerIsCorrect(List<String> emails) throws Throwable {
         Map<String, Object> response = getLastPostContentAs(OBJECT_RESOURCE_TYPE);
         assertEquals("some test name", response.get("fullName"));
-        assertEquals("test email", response.get("email"));
+        assertEquals(emails.get(emails.size() - 1), response.get("email")); // TODO: bad apologizing comment :P : All responses should be saved and tested for all emails..
         assertTrue((Boolean) response.get("isActive"));
     }
 

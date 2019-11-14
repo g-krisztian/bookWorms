@@ -49,7 +49,7 @@ public class LibrarianController {
     }
 
     @GetMapping(value = "/librarian/findCustomer")
-    public List<CustomerResponse> createCustomer(@RequestParam("field") String field, @RequestParam("value") String value) {
+    public List<CustomerResponse> findCustomer(@RequestParam("field") String field, @RequestParam("value") String value) {
         SearchField searchInField = convertSearchField(field);
         List<Customer> customers = customerService.findCustomer(searchInField, value);
         return customers.stream().map(customerResponseTransformer::transform).collect(Collectors.toList());
